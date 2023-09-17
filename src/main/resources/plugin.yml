@@ -1,0 +1,4 @@
+name: zMeetup
+version: '${project.version}'
+main: me.zowpy.meetup.MeetupPlugin
+authors: [ Zowpy ]
