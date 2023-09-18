@@ -27,10 +27,10 @@ GOLDEN_APPLE:
     - GOLDEN_APPLE:amount=6
 GOLDEN_HEAD:
   items:
-    - GOLDEN_APPLE:name=§6Golden Head
-    - GOLDEN_APPLE:name=§6Golden Head:amount=2
-    - GOLDEN_APPLE:name=§6Golden Head:amount=3
-    - GOLDEN_APPLE:name=§6Golden Head:amount=4
+    - GOLDEN_APPLE:name=&6Golden Head
+    - GOLDEN_APPLE:name=&6Golden Head:amount=2
+    - GOLDEN_APPLE:name=&6Golden Head:amount=3
+    - GOLDEN_APPLE:name=&6Golden Head:amount=4
 AXE:
   items:
     - IRON_AXE

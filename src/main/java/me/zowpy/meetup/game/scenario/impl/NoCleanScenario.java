@@ -1,4 +1,4 @@
-package me.zowpy.meetup.game.scenario.impl.noclean;
+package me.zowpy.meetup.game.scenario.impl;
 
 import lombok.Getter;
 import me.zowpy.meetup.MeetupPlugin;
@@ -129,7 +129,10 @@ public class NoCleanScenario extends Scenario {
                 return;
             }
 
-            noClean.remove(damager.getUniqueId());
+            if (noClean.containsKey(damager.getUniqueId())) {
+                noClean.remove(damager.getUniqueId());
+                damager.sendMessage(plugin.getMessages().noCleanRemoved);
+            }
         }
     }
 }

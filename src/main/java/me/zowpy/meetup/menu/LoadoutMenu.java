@@ -1,8 +1,9 @@
 package me.zowpy.meetup.menu;
 
 import lombok.RequiredArgsConstructor;
-import me.zowpy.meetup.loadout.Loadout;
+import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.loadout.LoadoutItem;
+import me.zowpy.meetup.profile.Profile;
 import me.zowpy.meetup.utils.menu.Menu;
 import me.zowpy.meetup.utils.menu.buttons.Button;
 import me.zowpy.meetup.utils.menu.buttons.impl.DisplayButton;
@@ -13,11 +14,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @RequiredArgsConstructor
 public class LoadoutMenu extends Menu {
 
-    private final Loadout loadout;
+    private final Profile profile;
 
     @Override
     public String getTitle(Player player) {
@@ -42,7 +44,7 @@ public class LoadoutMenu extends Menu {
         for (LoadoutItem item : LoadoutItem.values()) {
             if (item.isArmor()) continue;
 
-            toReturn.put(inventoryOrder(loadout.getItems().get(item)), new DisplayButton(item.getDisplayItem(), false));
+            toReturn.put(inventoryOrder(profile.getLoadout().getItems().get(item)), new DisplayButton(item.getDisplayItem(), false));
         }
 
         return toReturn;
@@ -56,7 +58,7 @@ public class LoadoutMenu extends Menu {
         boolean water = false;
         boolean lava = false;
 
-        for (int i = 0; i < 27; i++) {
+        for (int i = 0; i < 36; i++) {
             ItemStack item = inventory.getItem(i);
 
             if (item == null || item.getType() == Material.AIR) continue;
@@ -81,24 +83,21 @@ public class LoadoutMenu extends Menu {
                 }
 
                 int slot = reverseOrder(i);
-                loadout.getItems().put(loadoutItem, slot);
+                profile.getLoadout().getItems().put(loadoutItem, slot);
             }
         }
 
-        loadout.getItems().forEach((item, integer) -> {
-            System.out.println(item.name() + " : " + integer);
+        CompletableFuture.runAsync(() -> {
+            MeetupPlugin.getInstance().getProfileHandler().save(profile);
         });
 
     }
 
     private int inventoryOrder(int slot) {
-        //System.arraycopy(source, 0, fixed, 27, 9);
-        //System.arraycopy(source, 9, fixed, 0, 27);
-
-        return slot >= 10 && slot <= 17 ? slot - 9 : slot <= 8 ? 27 + slot : slot == 9 ? 0 : slot;
+        return slot >= 9 && slot <= 35 ? slot - 9 : slot >= 0 && slot <= 8 ? slot + 27 : slot <= 17 ? slot - 9 : slot;
     }
 
     private int reverseOrder(int slot) {
-        return slot >= 27 && slot <= 35 ? slot - 27 : slot + 9 >= 10 && slot + 9 <= 35 ? slot + 9 : slot == 0 ? 9 : slot;
+        return slot >= 27 && slot <= 35 ? slot - 27 : slot >= 1 && slot <= 26 ? slot + 9 : slot == 0 ? 9 : slot;
     }
 }

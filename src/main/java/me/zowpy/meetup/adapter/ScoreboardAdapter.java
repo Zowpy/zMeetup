@@ -4,7 +4,7 @@ import io.github.thatkawaiisam.assemble.AssembleAdapter;
 import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.player.MeetupPlayer;
-import me.zowpy.meetup.game.scenario.impl.noclean.NoCleanScenario;
+import me.zowpy.meetup.game.scenario.impl.NoCleanScenario;
 import me.zowpy.meetup.game.state.impl.FightingState;
 import me.zowpy.meetup.game.state.impl.StartingState;
 import me.zowpy.meetup.game.state.impl.WaitingState;
@@ -15,7 +15,6 @@ import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,8 +59,6 @@ public class ScoreboardAdapter implements AssembleAdapter {
 
             int secondsLeft = (int) (((fightingState.getShrinkTask().getLastShrink() + (FightingStateBorderShrinkTask.SECONDS_PER_UPDATE * 1000)) - System.currentTimeMillis()) / 1000);
 
-
-            //System.out.println(plugin.getScenarioHandler().getScenario(NoCleanScenario.class) == null);
             if (plugin.getScenarioHandler().isEnabled("noclean") && plugin.getScenarioHandler().getScenario(NoCleanScenario.class).getNoClean().containsKey(player.getUniqueId())) {
 
                 NoCleanScenario noClean = plugin.getScenarioHandler().getScenario(NoCleanScenario.class);
@@ -90,7 +87,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                     )).collect(Collectors.toList());
         }
 
-        return Arrays.asList("coming", "soon");
+        return null;
     }
 
     private int secondsLeft(long l) {

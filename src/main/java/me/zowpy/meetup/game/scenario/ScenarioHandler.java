@@ -1,14 +1,16 @@
 package me.zowpy.meetup.game.scenario;
 
+import lombok.Getter;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.scenario.impl.TimeBombScenario;
-import me.zowpy.meetup.game.scenario.impl.noclean.NoCleanScenario;
+import me.zowpy.meetup.game.scenario.impl.NoCleanScenario;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ScenarioHandler {
 
+    @Getter
     private final List<Scenario> activeScenarios = new ArrayList<>();
 
     public ScenarioHandler() {

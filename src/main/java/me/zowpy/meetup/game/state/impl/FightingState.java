@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.player.MeetupPlayer;
+import me.zowpy.meetup.game.state.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.game.task.FightingStateBorderShrinkTask;
@@ -39,6 +40,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -71,6 +73,10 @@ public class FightingState extends SpectateState implements IState, Listener {
             plugin.getGameHandler().getPlayers().put(player.getUniqueId(), meetupPlayer);
         }
 
+        CompletableFuture.runAsync(() -> {
+            Bukkit.getOnlinePlayers().forEach(player -> plugin.getProfileHandler().gamePlayed(player));
+        });
+
         Bukkit.broadcastMessage(plugin.getMessages().started);
         shrinkTask = new FightingStateBorderShrinkTask(plugin, Bukkit.getWorld(plugin.getSettings().worldName));
     }
@@ -84,15 +90,20 @@ public class FightingState extends SpectateState implements IState, Listener {
         EndingState endingState;
 
         if (winners.size() != 1) {
-            endingState = new EndingState(null);
+            endingState = new EndingState(plugin, null);
         } else {
-            endingState = new EndingState(winners.get(0));
+            endingState = new EndingState(plugin, winners.get(0));
         }
 
         endingState.enable();
 
         shrinkTask.cancel();
         HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public GameState getGameState() {
+        return GameState.FIGHTING;
     }
 
     private void unsit(Player player) {
@@ -159,6 +170,8 @@ public class FightingState extends SpectateState implements IState, Listener {
             drops.addAll(Arrays.asList(player.getInventory().getContents()));
 
             deathChest(player, drops);
+
+            CompletableFuture.runAsync(() -> plugin.getProfileHandler().loss(player));
         }
 
         if (remainingPlayers() <= 1) {
@@ -196,6 +209,8 @@ public class FightingState extends SpectateState implements IState, Listener {
         if (player.getKiller() != null) {
             Player killer = player.getKiller();
             MeetupPlayer killerProfile = plugin.getGameHandler().getPlayer(killer);
+
+            CompletableFuture.runAsync(() -> plugin.getProfileHandler().kill(killer));
 
             String killerFormat = plugin.getMessages().playerFormat.replace("<player>", killer.getName());
 
@@ -238,6 +253,8 @@ public class FightingState extends SpectateState implements IState, Listener {
             }
 
         }
+
+        CompletableFuture.runAsync(() -> plugin.getProfileHandler().death(player));
 
         player.spigot().respawn();
 

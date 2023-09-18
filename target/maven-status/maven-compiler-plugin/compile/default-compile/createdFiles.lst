@@ -1,8 +1,8 @@
 me\zowpy\meetup\config\MenusConfig$SpectatingMenu.class
+me\zowpy\meetup\game\state\GameState.class
 me\zowpy\meetup\utils\Cuboid.class
 me\zowpy\meetup\utils\ItemHelper.class
 me\zowpy\meetup\game\prevention\PreventionListener.class
-me\zowpy\meetup\game\scenario\impl\noclean\NoCleanScenario$1.class
 me\zowpy\meetup\menu\LoadoutMenu.class
 me\zowpy\meetup\config\Messages.class
 me\zowpy\meetup\loadout\Loadout.class
@@ -14,12 +14,15 @@ me\zowpy\meetup\border\event\player\PlayerBorderEvent.class
 me\zowpy\meetup\game\scenario\ScenarioHandler.class
 me\zowpy\meetup\utils\menu\ButtonListener.class
 me\zowpy\meetup\game\state\impl\StartingState$1.class
+me\zowpy\meetup\profile\Profile.class
 me\zowpy\meetup\adapter\ScoreboardAdapter.class
 me\zowpy\meetup\command\LoadoutCommand.class
+me\zowpy\meetup\game\scenario\impl\NoCleanScenario$1.class
 me\zowpy\meetup\menu\SpectatingMenu.class
 me\zowpy\meetup\utils\ConfigFile.class
 me\zowpy\meetup\border\event\player\PlayerExitBorderEvent.class
 me\zowpy\meetup\border\Border.class
+me\zowpy\meetup\database\MongoHandler.class
 me\zowpy\meetup\game\state\impl\FightingState.class
 me\zowpy\meetup\border\runnable\EnsureInsideRunnable.class
 me\zowpy\meetup\utils\menu\buttons\impl\ConfirmationButton.class
@@ -33,10 +36,10 @@ me\zowpy\meetup\game\state\impl\WaitingState.class
 me\zowpy\meetup\loadout\LoadoutItem.class
 me\zowpy\meetup\world\WorldGenerator.class
 me\zowpy\meetup\game\GameHandler.class
+me\zowpy\meetup\profile\ProfileHandler.class
 me\zowpy\meetup\config\HotbarConfig.class
 me\zowpy\meetup\game\player\MeetupPlayer.class
 me\zowpy\meetup\utils\PlayerUtil.class
-me\zowpy\meetup\game\scenario\impl\noclean\NoCleanScenario.class
 me\zowpy\meetup\MeetupPlugin.class
 me\zowpy\meetup\border\action\DefaultBorderActions.class
 me\zowpy\meetup\config\ScoreboardConfig.class
@@ -49,6 +52,7 @@ me\zowpy\meetup\utils\menu\pagination\button\PageButton.class
 me\zowpy\meetup\utils\menu\buttons\impl\CloseButton.class
 me\zowpy\meetup\game\state\SpectateState.class
 me\zowpy\meetup\border\BorderConfiguration.class
+me\zowpy\meetup\command\StatsCommand.class
 me\zowpy\meetup\border\listener\InternalBorderListener.class
 me\zowpy\meetup\utils\Cuboid$CuboidIterator.class
 me\zowpy\meetup\game\kit\KitHandler.class
@@ -77,3 +81,4 @@ me\zowpy\meetup\game\scoreboard\ScoreboardListener.class
 me\zowpy\meetup\game\state\impl\FightingState$2.class
 me\zowpy\meetup\utils\CC.class
 me\zowpy\meetup\border\event\border\BorderChangeEvent.class
+me\zowpy\meetup\game\scenario\impl\NoCleanScenario.class

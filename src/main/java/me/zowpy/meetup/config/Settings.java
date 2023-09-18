@@ -9,6 +9,9 @@ import java.util.List;
 
 public class Settings {
 
+    @Comment("The mongodb connection string, For more help look at this. https://www.mongodb.com/docs/v2.2/reference/connection-string/")
+    public String mongoDB_URI = "mongodb://127.0.0.1:27017/admin";
+
     @Coloured
     public String primaryColor = "&e";
 

@@ -1,6 +1,7 @@
 package me.zowpy.meetup.game.state.impl;
 
 import me.zowpy.meetup.MeetupPlugin;
+import me.zowpy.meetup.game.state.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.utils.PlayerUtil;
 import org.bukkit.Bukkit;
@@ -26,6 +27,11 @@ public class WaitingState implements IState, Listener {
         state.enable();
 
         HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public GameState getGameState() {
+        return GameState.WAITING;
     }
 
     public boolean canStart() {

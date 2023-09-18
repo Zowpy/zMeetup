@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.border.Border;
+import me.zowpy.meetup.game.state.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.loadout.Loadout;
 import me.zowpy.meetup.utils.PlayerUtil;
@@ -28,6 +29,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
@@ -50,7 +52,9 @@ public class StartingState implements IState, Listener {
             teleport(player);
             sit(player);
 
-            plugin.getLoadoutHandler().giveRandom(player, new Loadout());
+            CompletableFuture.runAsync(() -> {
+                plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
+            });
         }
 
         new BukkitRunnable() {
@@ -98,6 +102,11 @@ public class StartingState implements IState, Listener {
     @Override
     public void disable() {
         HandlerList.unregisterAll(this);
+    }
+
+    @Override
+    public GameState getGameState() {
+        return GameState.STARTING;
     }
 
     private void sit(Player player) {
@@ -154,7 +163,9 @@ public class StartingState implements IState, Listener {
         sit(player);
 
         if (empty(player)) {
-            plugin.getLoadoutHandler().giveRandom(player, new Loadout());
+            CompletableFuture.runAsync(() -> {
+                plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
+            });
         }
     }
 

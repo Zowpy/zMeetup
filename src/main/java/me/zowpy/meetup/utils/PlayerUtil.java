@@ -6,7 +6,7 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
 import org.bukkit.GameMode;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
 import org.spigotmc.AsyncCatcher;
 
 public class PlayerUtil {
@@ -14,21 +14,28 @@ public class PlayerUtil {
     public static void reset(Player player) {
         AsyncCatcher.enabled = false;
 
-        player.getActivePotionEffects().clear();
         player.setHealth(20.0D);
         player.setFoodLevel(20);
-        player.setLevel(0);
-        player.setExp(0f);
-        player.setFireTicks(0);
+        player.setSaturation(12.8F);
         player.setMaximumNoDamageTicks(20);
-        player.setNoDamageTicks(20);
-        player.setSaturation(20);
+        player.setFireTicks(0);
+        player.setFallDistance(0.0F);
+        player.setLevel(0);
+        player.setExp(0.0F);
+        player.setWalkSpeed(0.2F);
+        player.getInventory().setHeldItemSlot(0);
         player.setAllowFlight(false);
-        player.setFlying(false);
+
+        player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
+
+        player.closeInventory();
+
         player.setGameMode(GameMode.SURVIVAL);
-        player.getInventory().setArmorContents(new ItemStack[4]);
-        player.getInventory().setContents(new ItemStack[36]);
-        player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
+        player.getActivePotionEffects().stream().map(PotionEffect::getType).forEach(player::removePotionEffect);
+
+        ((CraftPlayer) player).getHandle().getDataWatcher().watch(9, (byte)0);
+
         player.updateInventory();
     }
 

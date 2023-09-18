@@ -11,6 +11,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="API" target="1.8" />
       <module name="zMeetup" target="1.8" />
     </bytecodeTargetLevel>
   </component>

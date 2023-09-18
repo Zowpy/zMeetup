@@ -84,7 +84,7 @@ public class ItemHelper {
                 String name = data.replaceFirst("name=", "");
 
                 ItemMeta meta = itemStack.getItemMeta();
-                meta.setDisplayName(name);
+                meta.setDisplayName(CC.translate(name));
 
                 itemStack.setItemMeta(meta);
                 continue;

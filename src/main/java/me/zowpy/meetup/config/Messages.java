@@ -102,4 +102,7 @@ public class Messages {
 
     @Coloured
     public String noCleanHit = "&c<player>'s no clean timer expires in <seconds> <unit>.";
+
+    @Coloured
+    public String noCleanRemoved = "&cYour no clean timer has been removed since you hit a player.";
 }

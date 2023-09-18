@@ -1,25 +1,26 @@
 package me.zowpy.meetup;
 
 import io.github.thatkawaiisam.assemble.Assemble;
-import io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
-import io.github.thatkawaiisam.assemble.events.AssembleBoardCreatedEvent;
 import lombok.Getter;
 import me.zowpy.command.CommandAPI;
-import me.zowpy.core.bukkit.utils.menu.MenuAPI;
 import me.zowpy.meetup.adapter.ScoreboardAdapter;
 import me.zowpy.meetup.border.BorderHandler;
 import me.zowpy.meetup.command.AnnounceCommand;
 import me.zowpy.meetup.command.LoadoutCommand;
 import me.zowpy.meetup.command.SetSpawnCommand;
+import me.zowpy.meetup.command.StatsCommand;
 import me.zowpy.meetup.config.*;
+import me.zowpy.meetup.database.MongoHandler;
 import me.zowpy.meetup.game.GameHandler;
 import me.zowpy.meetup.game.prevention.PreventionListener;
 import me.zowpy.meetup.game.scenario.ScenarioHandler;
 import me.zowpy.meetup.game.scoreboard.ScoreboardListener;
 import me.zowpy.meetup.loadout.LoadoutHandler;
+import me.zowpy.meetup.profile.ProfileHandler;
+import me.zowpy.meetup.utils.CC;
 import me.zowpy.meetup.utils.ConfigFile;
-import me.zowpy.meetup.utils.menu.MenuUpdateTask;
 import me.zowpy.meetup.utils.menu.ButtonListener;
+import me.zowpy.meetup.utils.menu.MenuUpdateTask;
 import me.zowpy.meetup.world.WorldGenerator;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -40,6 +41,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
     private ConfigFile loadoutsFile;
 
+    private MongoHandler mongoHandler;
+    private ProfileHandler profileHandler;
     private GameHandler gameHandler;
     private WorldGenerator worldGenerator;
     private BorderHandler borderHandler;
@@ -63,6 +66,18 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         loadoutsFile = new ConfigFile(this, "loadouts");
 
+        try {
+            mongoHandler = new MongoHandler(settings.mongoDB_URI);
+        }catch (Exception e) {
+            e.printStackTrace();
+
+            getServer().getConsoleSender().sendMessage(CC.RED + "Failed to connect to MongoDB.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
+        profileHandler = new ProfileHandler(this);
+
         scenarioHandler = new ScenarioHandler();
 
         gameHandler = new GameHandler(this);
@@ -79,11 +94,11 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
                 .beginCommandRegister()
                 .register(new SetSpawnCommand(this))
                 .register(new AnnounceCommand(this))
-                .register(new LoadoutCommand())
+                .register(new LoadoutCommand(this))
+                .register(new StatsCommand(this))
                 .endRegister();
 
         assemble = new Assemble(this, new ScoreboardAdapter(this));
-        new MenuAPI(this);
 
         getServer().getPluginManager().registerEvents(new PreventionListener(), this);
         getServer().getPluginManager().registerEvents(new ButtonListener(this), this);
@@ -99,6 +114,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         if (assemble != null)
             assemble.cleanup();
+
+        mongoHandler.close();
 
         instance = null;
     }

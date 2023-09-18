@@ -2,6 +2,7 @@ package me.zowpy.meetup.border.runnable;
 
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.border.Border;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
@@ -14,7 +15,7 @@ public class EnsureInsideRunnable extends BukkitRunnable {
 
     public void run() {
 
-        for (Player loopPlayer : MeetupPlugin.getInstance().getServer().getOnlinePlayers()) {
+        for (Player loopPlayer : Bukkit.getOnlinePlayers()) {
 
             final Border border = MeetupPlugin.getInstance().getBorderHandler().getBorderForWorld(loopPlayer.getWorld());
 

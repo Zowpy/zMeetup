@@ -50,10 +50,6 @@ public class LoadoutHandler {
                 continue;
             }
 
-            if (itemStack.hasItemMeta() && itemStack.getItemMeta().hasDisplayName()) {
-                System.out.println(itemStack.getItemMeta().getDisplayName());
-            }
-
             itemStacks.add(itemStack);
         }
 
@@ -116,6 +112,12 @@ public class LoadoutHandler {
                         if (newEntry != null) {
                             slot = newEntry.getValue();
                         }
+                    }
+
+                    if (loadoutItem == LoadoutItem.GOLDEN_APPLE) {
+                        System.out.println(slot);
+                        System.out.println(itemStack.getType());
+                        System.out.println(itemStack.hasItemMeta());
                     }
 
                     player.getInventory().setItem(slot, itemStack);
