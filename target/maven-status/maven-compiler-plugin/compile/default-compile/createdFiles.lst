@@ -2,8 +2,8 @@ me\zowpy\meetup\config\MenusConfig$SpectatingMenu.class
 me\zowpy\meetup\utils\Cuboid.class
 me\zowpy\meetup\utils\ItemHelper.class
 me\zowpy\meetup\game\prevention\PreventionListener.class
+me\zowpy\meetup\game\scenario\impl\noclean\NoCleanScenario$1.class
 me\zowpy\meetup\menu\LoadoutMenu.class
-me\zowpy\meetup\border\runnable\ParticleRunnable.class
 me\zowpy\meetup\config\Messages.class
 me\zowpy\meetup\loadout\Loadout.class
 me\zowpy\meetup\game\scenario\Scenario.class
@@ -36,6 +36,7 @@ me\zowpy\meetup\game\GameHandler.class
 me\zowpy\meetup\config\HotbarConfig.class
 me\zowpy\meetup\game\player\MeetupPlayer.class
 me\zowpy\meetup\utils\PlayerUtil.class
+me\zowpy\meetup\game\scenario\impl\noclean\NoCleanScenario.class
 me\zowpy\meetup\MeetupPlugin.class
 me\zowpy\meetup\border\action\DefaultBorderActions.class
 me\zowpy\meetup\config\ScoreboardConfig.class

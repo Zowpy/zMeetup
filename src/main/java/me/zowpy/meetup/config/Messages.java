@@ -90,4 +90,16 @@ public class Messages {
 
     @Coloured
     public String startedSubtitle = "Game has started!";
+
+    @Coloured
+    public String noCleanStart = "&aYou now have no clean timer.";
+
+    @Coloured
+    public String noCleanExpiring = "&cNo clean will expire in <seconds> <unit>.";
+
+    @Coloured
+    public String noCleanExpired = "&c&lYour no clean timer has expired.";
+
+    @Coloured
+    public String noCleanHit = "&c<player>'s no clean timer expires in <seconds> <unit>.";
 }

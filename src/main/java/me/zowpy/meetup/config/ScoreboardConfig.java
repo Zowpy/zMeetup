@@ -27,6 +27,8 @@ public class ScoreboardConfig {
             CC.MENU_BAR
     );
 
+    public String noCleanFormat = "&cNo clean: &d<seconds>";
+
     public List<String> fighting = Arrays.asList(
             CC.MENU_BAR,
             "Border: " + CC.PINK + "<border> &f(&d<seconds>&f)",
@@ -34,6 +36,8 @@ public class ScoreboardConfig {
             "Ping: " + CC.PINK + "<ping> ms",
             "Kills: " + CC.PINK + "<kills>",
             " ",
+            "<noclean>",
+            "<spaceifnoclean>",
             CC.PINK + "minemen.club",
             CC.MENU_BAR
     );
