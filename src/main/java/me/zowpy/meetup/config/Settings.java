@@ -45,5 +45,8 @@ public class Settings {
     @Comment("How many seconds should we wait before the death chest explodes?")
     public int timeBombSeconds = 30;
 
-    public float timeBombExplosionPower = 3.0f;
+    public double timeBombExplosionPower = 3.0f;
+
+    @Comment("The command that players will run when they click the (Join) from the /announce")
+    public String joinCommand = "/join um-01";
 }

@@ -26,7 +26,7 @@ public class AnnounceCommand {
         textBuilder.setText(plugin.getMessages().announce.replace("<player>", profile.getColoredName()));
 
         TextComponent click = new TextComponent(plugin.getMessages().announceJoin);
-        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/server um-01"));
+        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, plugin.getSettings().joinCommand));
 
         textBuilder.addExtra(click);
 

@@ -140,7 +140,7 @@ public class FightingState extends SpectateState implements IState, Listener {
 
                     World world = loc.getWorld();
 
-                    world.createExplosion(loc, plugin.getSettings().timeBombExplosionPower, false);
+                    world.createExplosion(loc, (float) plugin.getSettings().timeBombExplosionPower, false);
                 }
             }.runTaskLater(plugin, plugin.getSettings().timeBombSeconds * 20L);
         }
