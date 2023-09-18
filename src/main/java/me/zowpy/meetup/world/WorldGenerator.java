@@ -45,17 +45,14 @@ public class WorldGenerator {
         Location spawn = world.getSpawnLocation().clone();
         world.setSpawnLocation(spawn.getBlockX(), world.getHighestBlockYAt(spawn.getBlockX(), spawn.getBlockZ()) + 1, spawn.getBlockZ());
 
-
-        //plugin.setBorderManager(borderManager);
+        world.getWorldBorder().setCenter(0.0, 0.0);
+        world.getWorldBorder().setSize((plugin.getSettings().startingBorderSize) * 2.0);
 
         Border border = new Border(world.getSpawnLocation(), Material.BEDROCK, plugin.getSettings().startingBorderSize, plugin.getSettings().borderHeight);
         border.getPhysicalBounds().getChunks().forEach(world::loadChunk);
         world.getEntities().stream().filter(entity -> entity.getType().isAlive() && entity.getType() != EntityType.PLAYER).forEach(Entity::remove);
 
         border.fill();
-
-        world.getWorldBorder().setCenter(0, 0);
-        world.getWorldBorder().setSize(plugin.getSettings().startingBorderSize * 2.0);
     }
 
     @SneakyThrows

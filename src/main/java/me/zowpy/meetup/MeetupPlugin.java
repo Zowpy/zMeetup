@@ -12,6 +12,7 @@ import me.zowpy.meetup.command.SetSpawnCommand;
 import me.zowpy.meetup.config.*;
 import me.zowpy.meetup.game.GameHandler;
 import me.zowpy.meetup.game.prevention.PreventionListener;
+import me.zowpy.meetup.game.scenario.ScenarioHandler;
 import me.zowpy.meetup.loadout.LoadoutHandler;
 import me.zowpy.meetup.utils.ConfigFile;
 import me.zowpy.meetup.utils.menu.MenuUpdateTask;
@@ -40,6 +41,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
     private WorldGenerator worldGenerator;
     private BorderHandler borderHandler;
     private LoadoutHandler loadoutHandler;
+    private ScenarioHandler scenarioHandler;
 
     private Assemble assemble;
 
@@ -57,6 +59,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         menusConfig = configFactory.fromFile("menus", MenusConfig.class);
 
         loadoutsFile = new ConfigFile(this, "loadouts");
+
+        scenarioHandler = new ScenarioHandler();
 
         gameHandler = new GameHandler(this);
         gameHandler.getGameState().enable();

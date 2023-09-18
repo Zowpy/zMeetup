@@ -73,15 +73,12 @@ public class FightingStateBorderShrinkTask extends BukkitRunnable {
         if (secondsLeft <= 0) {
             //plugin.getBorderManager().setCurrentRadius(nextBorderSize);
             Border border = plugin.getBorderHandler().getBorderForWorld(world);
+            int currentSize = nextBorderSize;
+
+            world.getWorldBorder().setSize(currentSize * 2.0);
 
             border.contract(border.getSize() - nextBorderSize);
             border.fill();
-
-            int size = (int) world.getWorldBorder().getSize();
-
-            int currentSize = nextBorderSize;
-
-            world.getWorldBorder().setSize(size * 2.0);
 
             lastShrink = System.currentTimeMillis();
             nextBorderSize = plugin.getSettings().borderSizes.stream()

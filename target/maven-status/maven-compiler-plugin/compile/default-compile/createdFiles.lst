@@ -6,10 +6,12 @@ me\zowpy\meetup\menu\LoadoutMenu.class
 me\zowpy\meetup\border\runnable\ParticleRunnable.class
 me\zowpy\meetup\config\Messages.class
 me\zowpy\meetup\loadout\Loadout.class
+me\zowpy\meetup\game\scenario\Scenario.class
 me\zowpy\meetup\border\event\border\BorderEvent.class
 me\zowpy\meetup\command\SetSpawnCommand.class
 me\zowpy\meetup\border\Border$EnsureAction.class
 me\zowpy\meetup\border\event\player\PlayerBorderEvent.class
+me\zowpy\meetup\game\scenario\ScenarioHandler.class
 me\zowpy\meetup\utils\menu\ButtonListener.class
 me\zowpy\meetup\game\state\impl\StartingState$1.class
 me\zowpy\meetup\adapter\ScoreboardAdapter.class
@@ -23,6 +25,7 @@ me\zowpy\meetup\border\runnable\EnsureInsideRunnable.class
 me\zowpy\meetup\utils\menu\buttons\impl\ConfirmationButton.class
 me\zowpy\meetup\config\MenusConfig.class
 me\zowpy\meetup\game\state\impl\EndingState.class
+me\zowpy\meetup\game\scenario\impl\TimeBombScenario.class
 me\zowpy\meetup\utils\ItemBuilder.class
 me\zowpy\meetup\config\Settings.class
 me\zowpy\meetup\game\state\impl\StartingState.class
@@ -69,5 +72,6 @@ me\zowpy\meetup\game\state\IState.class
 me\zowpy\meetup\loadout\LoadoutItem$1.class
 me\zowpy\meetup\utils\menu\buttons\impl\Glass.class
 me\zowpy\meetup\utils\menu\buttons\impl\DisplayButton.class
+me\zowpy\meetup\game\state\impl\FightingState$2.class
 me\zowpy\meetup\utils\CC.class
 me\zowpy\meetup\border\event\border\BorderChangeEvent.class

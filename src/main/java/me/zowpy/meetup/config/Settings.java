@@ -41,4 +41,9 @@ public class Settings {
     public List<Integer> titleSeconds = Arrays.asList(
             15, 10, 5, 4, 3, 2, 1
     );
+
+    @Comment("How many seconds should we wait before the death chest explodes?")
+    public int timeBombSeconds = 30;
+
+    public float timeBombExplosionPower = 3.0f;
 }

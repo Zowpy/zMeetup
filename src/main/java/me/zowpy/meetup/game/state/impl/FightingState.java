@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
@@ -33,6 +34,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -121,9 +123,26 @@ public class FightingState extends SpectateState implements IState, Listener {
         if (holder instanceof DoubleChest) {
             DoubleChest doubleChest = ((DoubleChest) holder);
 
-            drops.forEach(itemStack -> doubleChest.getInventory().addItem(itemStack));
+            drops.stream().filter(itemStack -> itemStack != null && itemStack.getType() != Material.AIR).forEach(itemStack -> doubleChest.getInventory().addItem(itemStack));
         } else {
-            drops.forEach(itemStack -> chest.getBlockInventory().addItem(itemStack));
+            drops.stream().filter(itemStack -> itemStack != null && itemStack.getType() != Material.AIR).forEach(itemStack -> chest.getBlockInventory().addItem(itemStack));
+        }
+
+        if (plugin.getScenarioHandler().isEnabled("timebomb")) {
+            new BukkitRunnable() {
+
+                @Override
+                public void run() {
+                    holder.getInventory().clear();
+
+                    block1.setType(Material.AIR);
+                    block2.setType(Material.AIR);
+
+                    World world = loc.getWorld();
+
+                    world.createExplosion(loc, plugin.getSettings().timeBombExplosionPower, false);
+                }
+            }.runTaskLater(plugin, plugin.getSettings().timeBombSeconds * 20L);
         }
     }
 
