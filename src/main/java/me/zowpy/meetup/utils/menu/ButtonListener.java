@@ -41,8 +41,6 @@ public class ButtonListener implements Listener {
                 return;
             }
 
-            System.out.println(event.getAction().name());
-
             if (event.getSlot() != event.getRawSlot()) {
 
                 if ((event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)) {
