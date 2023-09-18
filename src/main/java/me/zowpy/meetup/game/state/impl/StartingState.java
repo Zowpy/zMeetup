@@ -10,6 +10,7 @@ import me.zowpy.meetup.utils.PlayerUtil;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
@@ -26,6 +27,7 @@ import org.bukkit.event.player.*;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
@@ -151,7 +153,14 @@ public class StartingState implements IState, Listener {
         teleport(player);
         sit(player);
 
-        plugin.getLoadoutHandler().giveRandom(player, new Loadout());
+        if (empty(player)) {
+            plugin.getLoadoutHandler().giveRandom(player, new Loadout());
+        }
+    }
+
+    private boolean empty(Player player) {
+        return Arrays.stream(player.getInventory().getContents())
+                .allMatch(itemStack -> itemStack == null || itemStack.getType() == Material.AIR);
     }
 
     @EventHandler

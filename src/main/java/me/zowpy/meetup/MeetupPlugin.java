@@ -1,6 +1,8 @@
 package me.zowpy.meetup;
 
 import io.github.thatkawaiisam.assemble.Assemble;
+import io.github.thatkawaiisam.assemble.events.AssembleBoardCreateEvent;
+import io.github.thatkawaiisam.assemble.events.AssembleBoardCreatedEvent;
 import lombok.Getter;
 import me.zowpy.command.CommandAPI;
 import me.zowpy.core.bukkit.utils.menu.MenuAPI;
@@ -13,6 +15,7 @@ import me.zowpy.meetup.config.*;
 import me.zowpy.meetup.game.GameHandler;
 import me.zowpy.meetup.game.prevention.PreventionListener;
 import me.zowpy.meetup.game.scenario.ScenarioHandler;
+import me.zowpy.meetup.game.scoreboard.ScoreboardListener;
 import me.zowpy.meetup.loadout.LoadoutHandler;
 import me.zowpy.meetup.utils.ConfigFile;
 import me.zowpy.meetup.utils.menu.MenuUpdateTask;
@@ -84,6 +87,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         getServer().getPluginManager().registerEvents(new PreventionListener(), this);
         getServer().getPluginManager().registerEvents(new ButtonListener(this), this);
+        getServer().getPluginManager().registerEvents(new ScoreboardListener(), this);
 
         new MenuUpdateTask(this);
 

@@ -32,6 +32,7 @@ public class EnsureInsideRunnable extends BukkitRunnable {
                 }
 
                 loopPlayer.teleport(location);
+                loopPlayer.sendMessage(MeetupPlugin.getInstance().getMessages().teleportInsideBorder);
             }
         }
 

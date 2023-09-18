@@ -20,9 +20,17 @@ FOOD:
 GOLDEN_APPLE:
   items:
     - GOLDEN_APPLE
+    - GOLDEN_APPLE:amount=2
+    - GOLDEN_APPLE:amount=3
+    - GOLDEN_APPLE:amount=4
+    - GOLDEN_APPLE:amount=5
+    - GOLDEN_APPLE:amount=6
 GOLDEN_HEAD:
   items:
-    - GOLDEN_APPLE
+    - GOLDEN_APPLE:name=§6Golden Head
+    - GOLDEN_APPLE:name=§6Golden Head:amount=2
+    - GOLDEN_APPLE:name=§6Golden Head:amount=3
+    - GOLDEN_APPLE:name=§6Golden Head:amount=4
 AXE:
   items:
     - IRON_AXE
@@ -55,7 +63,7 @@ ANVIL:
     - ANVIL
 EXP_BOTTLE:
   items:
-    - EXP_BOTTLE
+    - EXP_BOTTLE:amount=64
 HELMET:
   items:
     - IRON_HELMET

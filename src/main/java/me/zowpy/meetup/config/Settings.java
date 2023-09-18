@@ -16,7 +16,7 @@ public class Settings {
     public String secondaryColor = "&d";
 
     public int startingBorderSize = 125;
-    public int borderHeight = 50;
+    public int borderHeight = 15;
 
     @Comment("make sure that this name is not used by any other world or that world will be deleted!")
     public String worldName = "uhc_meetup";

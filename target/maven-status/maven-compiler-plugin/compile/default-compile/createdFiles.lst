@@ -72,6 +72,7 @@ me\zowpy\meetup\game\state\IState.class
 me\zowpy\meetup\loadout\LoadoutItem$1.class
 me\zowpy\meetup\utils\menu\buttons\impl\Glass.class
 me\zowpy\meetup\utils\menu\buttons\impl\DisplayButton.class
+me\zowpy\meetup\game\scoreboard\ScoreboardListener.class
 me\zowpy\meetup\game\state\impl\FightingState$2.class
 me\zowpy\meetup\utils\CC.class
 me\zowpy\meetup\border\event\border\BorderChangeEvent.class
