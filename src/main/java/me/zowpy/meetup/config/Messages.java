@@ -75,9 +75,15 @@ public class Messages {
     @Coloured
     public String announce = CC.PINK + CC.BOLD + "UHC Meetup " + CC.GRAY + "» <player>&e wants you to play!";
 
-    @Comment("This clickable message requires Volcano Core.")
+    @Comment("This clickable message requires BungeeCord.")
     @Coloured
     public String announceJoin = "&a (Join)";
+
+    public List<String> announceJoinHover = Arrays.asList(
+            "&eClick to join um-01",
+            " ",
+            "&c&lWarning: &r&cThis will switch your server!"
+    );
 
     @Coloured
     public String startingTitle = "&a&l<seconds>";

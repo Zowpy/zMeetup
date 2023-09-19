@@ -102,6 +102,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new ButtonListener(this), this);
         getServer().getPluginManager().registerEvents(new ScoreboardListener(), this);
 
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+
         new MenuUpdateTask(this);
 
         ready = true;
