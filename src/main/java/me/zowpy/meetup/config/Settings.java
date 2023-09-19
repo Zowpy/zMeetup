@@ -1,6 +1,7 @@
 package me.zowpy.meetup.config;
 
 import org.bukkit.Location;
+import org.bukkit.block.Biome;
 import xyz.mkotb.configapi.Coloured;
 import xyz.mkotb.configapi.comment.Comment;
 
@@ -31,6 +32,11 @@ public class Settings {
 
     @Comment("How many seconds should the countdown be?")
     public int seconds = 60;
+
+    @Comment("Which biomes should we use in the uhc meetup world?")
+    public List<Biome> biomes = Arrays.asList(
+            Biome.SAVANNA, Biome.PLAINS
+    );
 
     @Comment({"These are all the border sizes that will occur in-game each border size stays for 2 minutes", "after that it changes to another smaller one, if a smaller one is not present the game will end in a draw", "Make sure all the values below are smaller than the starting border size"})
     public List<Integer> borderSizes = Arrays.asList(

@@ -13,6 +13,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 import java.io.File;
+import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
 public class WorldGenerator {
@@ -25,9 +26,9 @@ public class WorldGenerator {
         delete();
 
         for (Biome biome : Biome.values()) {
-            if (biome == Biome.PLAINS) continue;
+            if (plugin.getSettings().biomes.contains(biome)) continue;
 
-            swapBiomes(biome, Biome.PLAINS);
+            swapBiomes(biome, plugin.getSettings().biomes.get(ThreadLocalRandom.current().nextInt(plugin.getSettings().biomes.size())));
         }
 
         WorldCreator creator = new WorldCreator(worldName);
