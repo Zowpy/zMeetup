@@ -8,10 +8,13 @@ import me.zowpy.meetup.border.BorderHandler;
 import me.zowpy.meetup.command.*;
 import me.zowpy.meetup.config.*;
 import me.zowpy.meetup.database.MongoHandler;
+import me.zowpy.meetup.expansion.MeetupExpansion;
 import me.zowpy.meetup.game.GameHandler;
 import me.zowpy.meetup.game.prevention.PreventionListener;
 import me.zowpy.meetup.game.scenario.ScenarioHandler;
 import me.zowpy.meetup.game.scoreboard.ScoreboardListener;
+import me.zowpy.meetup.leaderboard.LeaderboardHandler;
+import me.zowpy.meetup.leaderboard.task.LeaderboardTask;
 import me.zowpy.meetup.loadout.LoadoutHandler;
 import me.zowpy.meetup.profile.ProfileHandler;
 import me.zowpy.meetup.utils.CC;
@@ -45,6 +48,9 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
     private BorderHandler borderHandler;
     private LoadoutHandler loadoutHandler;
     private ScenarioHandler scenarioHandler;
+    private LeaderboardHandler leaderboardHandler;
+
+    private LeaderboardTask leaderboardTask;
 
     private Assemble assemble;
 
@@ -74,7 +80,6 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         }
 
         profileHandler = new ProfileHandler(this);
-
         scenarioHandler = new ScenarioHandler();
 
         gameHandler = new GameHandler(this);
@@ -86,6 +91,9 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         worldGenerator.generate();
 
         loadoutHandler = new LoadoutHandler(this);
+
+        leaderboardHandler = new LeaderboardHandler(this);
+        leaderboardTask = new LeaderboardTask(this);
 
         new CommandAPI(this)
                 .beginCommandRegister()
@@ -104,6 +112,10 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
+        if (getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            new MeetupExpansion(this).register();
+        }
+
         new MenuUpdateTask(this);
 
         ready = true;
@@ -114,6 +126,9 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         if (assemble != null)
             assemble.cleanup();
+
+        if (leaderboardTask != null)
+            leaderboardTask.cancel();
 
         mongoHandler.close();
 
