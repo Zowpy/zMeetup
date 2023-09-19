@@ -10,7 +10,9 @@ import org.bukkit.scoreboard.Scoreboard;
 public class ScoreboardListener implements Listener {
 
     @EventHandler
-    public void onBoardCreated(AssembleBoardCreatedEvent event) {
+    public void onPlayer(AssembleBoardCreatedEvent event) {
+        System.out.println(event.getBoard().getUuid().toString());
+
         Scoreboard scoreboard = event.getBoard().getScoreboard();
         Objective objective = scoreboard.getObjective("Health");
 

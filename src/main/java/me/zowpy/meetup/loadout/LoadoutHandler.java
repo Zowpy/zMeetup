@@ -114,12 +114,6 @@ public class LoadoutHandler {
                         }
                     }
 
-                    if (loadoutItem == LoadoutItem.GOLDEN_APPLE) {
-                        System.out.println(slot);
-                        System.out.println(itemStack.getType());
-                        System.out.println(itemStack.hasItemMeta());
-                    }
-
                     player.getInventory().setItem(slot, itemStack);
                     set = true;
                 }

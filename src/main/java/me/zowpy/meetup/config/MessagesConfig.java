@@ -132,4 +132,7 @@ public class MessagesConfig {
 
     @Coloured
     public String spectateStopConfirmationButton = "&c [Click here to stop spectating]";
+
+    @Coloured
+    public String arrowHit = "&d<player> &eis now at &d<hearts>❤";
 }

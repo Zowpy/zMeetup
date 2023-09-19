@@ -24,12 +24,15 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -325,6 +328,23 @@ public class FightingState extends SpectateState implements IState, Listener {
                 player.setItemOnCursor(null);
             }
         }
+    }
+
+    @EventHandler
+    public void onArrowHit(EntityDamageByEntityEvent event) {
+
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Arrow) {
+
+            Player entity = (Player) event.getEntity();
+            Player damager = (Player) ((Arrow) event.getDamager()).getShooter();
+            double health = Math.ceil(entity.getHealth() - event.getFinalDamage()) / 2.0D;
+
+            if (health > 0.0) {
+                damager.sendMessage(plugin.getMessages().arrowHit.replace("<player>", entity.getName())
+                        .replace("<health>", health + ""));
+            }
+        }
+
     }
 
     public int remainingPlayers() {
