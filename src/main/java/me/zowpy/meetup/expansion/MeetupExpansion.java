@@ -71,7 +71,9 @@ public class MeetupExpansion extends PlaceholderExpansion {
         }
 
         if (params.equalsIgnoreCase("leaderboard_nextupdate")) {
-            return (((plugin.getLeaderboardHandler().getLastUpdate() + plugin.getSettings().leaderboardInterval * 1000L) - System.currentTimeMillis()) / 1000L) + "";
+            int seconds = (int) (((plugin.getLeaderboardHandler().getLastUpdate() + plugin.getSettings().leaderboardInterval * 1000L) - System.currentTimeMillis()) / 1000L);
+
+            return seconds == -1 ? plugin.getSettings().leaderboardInterval + "" : seconds + "";
         }
 
         if (params.startsWith("leaderboard")) {

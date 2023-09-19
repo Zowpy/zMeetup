@@ -44,6 +44,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,6 +57,8 @@ public class FightingState extends SpectateState implements IState, Listener {
 
     @Getter
     private FightingStateBorderShrinkTask shrinkTask;
+
+    private BukkitTask checkTask;
 
     private final MeetupPlugin plugin;
 
@@ -84,10 +87,22 @@ public class FightingState extends SpectateState implements IState, Listener {
 
         Bukkit.broadcastMessage(plugin.getMessages().started);
         shrinkTask = new FightingStateBorderShrinkTask(plugin, Bukkit.getWorld(plugin.getSettings().worldName));
+
+        checkTask = new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                if (remainingPlayers() <= 1) {
+                    disable();
+                }
+            }
+        }.runTaskTimer(plugin, 20L, 20L);
     }
 
     @Override
     public void disable() {
+        checkTask.cancel();
+
         List<MeetupPlayer> winners = plugin.getGameHandler().getPlayers().values()
                 .stream().filter(meetupPlayer1 -> !meetupPlayer1.isDead() && !meetupPlayer1.isSpectating())
                 .collect(Collectors.toList());
@@ -178,10 +193,6 @@ public class FightingState extends SpectateState implements IState, Listener {
 
             CompletableFuture.runAsync(() -> plugin.getProfileHandler().loss(player));
         }
-
-        if (remainingPlayers() <= 1) {
-            disable();
-        }
     }
 
     @EventHandler
@@ -262,10 +273,6 @@ public class FightingState extends SpectateState implements IState, Listener {
         CompletableFuture.runAsync(() -> plugin.getProfileHandler().death(player));
 
         player.spigot().respawn();
-
-        if (remainingPlayers() <= 1) {
-            disable();
-        }
     }
 
     @EventHandler

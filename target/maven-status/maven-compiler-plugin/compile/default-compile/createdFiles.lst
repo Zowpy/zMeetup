@@ -32,6 +32,7 @@ me\zowpy\meetup\utils\menu\buttons\impl\ConfirmationButton.class
 me\zowpy\meetup\config\MenusConfig.class
 me\zowpy\meetup\game\state\impl\EndingState.class
 me\zowpy\meetup\expansion\MeetupExpansion.class
+me\zowpy\meetup\game\state\impl\FightingState$3.class
 me\zowpy\meetup\game\scenario\impl\TimeBombScenario.class
 me\zowpy\meetup\utils\ItemBuilder.class
 me\zowpy\meetup\game\state\impl\StartingState.class
