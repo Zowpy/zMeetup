@@ -1,14 +1,15 @@
 me\zowpy\meetup\config\MenusConfig$SpectatingMenu.class
-me\zowpy\meetup\game\state\GameState.class
 me\zowpy\meetup\utils\Cuboid.class
 me\zowpy\meetup\utils\ItemHelper.class
 me\zowpy\meetup\game\prevention\PreventionListener.class
+me\zowpy\meetup\game\enums\GameState.class
 me\zowpy\meetup\menu\LoadoutMenu.class
 me\zowpy\meetup\config\Messages.class
 me\zowpy\meetup\loadout\Loadout.class
 me\zowpy\meetup\game\scenario\Scenario.class
 me\zowpy\meetup\border\event\border\BorderEvent.class
 me\zowpy\meetup\command\SetSpawnCommand.class
+me\zowpy\meetup\command\SpectateCommand.class
 me\zowpy\meetup\border\Border$EnsureAction.class
 me\zowpy\meetup\border\event\player\PlayerBorderEvent.class
 me\zowpy\meetup\game\scenario\ScenarioHandler.class
@@ -37,6 +38,8 @@ me\zowpy\meetup\loadout\LoadoutItem.class
 me\zowpy\meetup\world\WorldGenerator.class
 me\zowpy\meetup\game\GameHandler.class
 me\zowpy\meetup\profile\ProfileHandler.class
+me\zowpy\meetup\game\enums\SpectateReason$1.class
+me\zowpy\meetup\game\enums\SpectateReason.class
 me\zowpy\meetup\config\HotbarConfig.class
 me\zowpy\meetup\game\player\MeetupPlayer.class
 me\zowpy\meetup\utils\PlayerUtil.class
@@ -62,6 +65,7 @@ me\zowpy\meetup\utils\Cuboid$1.class
 me\zowpy\meetup\utils\menu\Menu$1.class
 me\zowpy\meetup\utils\menu\MenuUpdateTask.class
 me\zowpy\meetup\utils\menu\buttons\Button.class
+me\zowpy\meetup\utils\TextBuilder.class
 me\zowpy\meetup\utils\menu\buttons\impl\BackButton.class
 me\zowpy\meetup\loadout\LoadoutHandler.class
 me\zowpy\meetup\utils\menu\utils\ItemBuilder.class

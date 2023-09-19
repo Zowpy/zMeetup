@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.player.MeetupPlayer;
 import me.zowpy.meetup.game.scenario.Scenario;
-import me.zowpy.meetup.game.state.GameState;
+import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.CC;

@@ -5,10 +5,7 @@ import lombok.Getter;
 import me.zowpy.command.CommandAPI;
 import me.zowpy.meetup.adapter.ScoreboardAdapter;
 import me.zowpy.meetup.border.BorderHandler;
-import me.zowpy.meetup.command.AnnounceCommand;
-import me.zowpy.meetup.command.LoadoutCommand;
-import me.zowpy.meetup.command.SetSpawnCommand;
-import me.zowpy.meetup.command.StatsCommand;
+import me.zowpy.meetup.command.*;
 import me.zowpy.meetup.config.*;
 import me.zowpy.meetup.database.MongoHandler;
 import me.zowpy.meetup.game.GameHandler;
@@ -96,6 +93,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
                 .register(new AnnounceCommand(this))
                 .register(new LoadoutCommand(this))
                 .register(new StatsCommand(this))
+                .register(new SpectateCommand(this))
                 .endRegister();
 
         assemble = new Assemble(this, new ScoreboardAdapter(this));

@@ -77,7 +77,7 @@ public class Messages {
 
     @Comment("This clickable message requires Volcano Core.")
     @Coloured
-    public String announceJoin = " &a(Join)";
+    public String announceJoin = "&a (Join)";
 
     @Coloured
     public String startingTitle = "&a&l<seconds>";
@@ -105,4 +105,28 @@ public class Messages {
 
     @Coloured
     public String noCleanRemoved = "&cYour no clean timer has been removed since you hit a player.";
+
+    @Coloured
+    public String spectateReasonChose = "&cchose to watch";
+
+    @Coloured
+    public String spectateReasonDied = "&cdied";
+
+    @Coloured
+    public String spectateReasonJoinedTooLate = "&cjoined too late";
+
+    @Coloured
+    public String spectateReasonMessage = "&eYou have been put into spectator: <reason>";
+
+    @Coloured
+    public String spectateConfirmation = "&7Are you sure you want to spectate?";
+
+    @Coloured
+    public String spectateConfirmationButton = "&a [Click here to spectate]";
+
+    @Coloured
+    public String spectateStopConfirmation = "&7Are you sure you want to stop spectating?";
+
+    @Coloured
+    public String spectateStopConfirmationButton = "&c [Click here to stop spectating]";
 }

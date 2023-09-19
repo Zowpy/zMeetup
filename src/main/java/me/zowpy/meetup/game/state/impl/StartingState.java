@@ -4,9 +4,9 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.border.Border;
-import me.zowpy.meetup.game.state.GameState;
+import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.state.IState;
-import me.zowpy.meetup.loadout.Loadout;
+import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.PlayerUtil;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
@@ -33,7 +33,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
-public class StartingState implements IState, Listener {
+public class StartingState extends SpectateState implements IState, Listener {
 
     private final MeetupPlugin plugin;
 
@@ -50,11 +50,14 @@ public class StartingState implements IState, Listener {
             PlayerUtil.reset(player);
 
             teleport(player);
-            sit(player);
 
-            CompletableFuture.runAsync(() -> {
-                plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
-            });
+            if (plugin.getGameHandler().isPlaying(player)) {
+                sit(player);
+
+                CompletableFuture.runAsync(() -> {
+                    plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
+                });
+            }
         }
 
         new BukkitRunnable() {
@@ -144,10 +147,10 @@ public class StartingState implements IState, Listener {
         World world = Bukkit.getWorld(plugin.getSettings().worldName);
         Border border = plugin.getBorderHandler().getBorderForWorld(world);
 
-        int offsetX = ThreadLocalRandom.current().nextInt(border.getSize() - 2);
-        int offsetZ = ThreadLocalRandom.current().nextInt(border.getSize() - 2);
+        int x = ThreadLocalRandom.current().nextInt(border.getSize() - 2);
+        int z = ThreadLocalRandom.current().nextInt(border.getSize() - 2);
 
-        Block block = world.getHighestBlockAt(offsetX, offsetZ);
+        Block block = world.getHighestBlockAt(x, z);
         Location loc = block.getLocation();
 
         player.teleport(loc);

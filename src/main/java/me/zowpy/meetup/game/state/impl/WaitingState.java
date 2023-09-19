@@ -1,8 +1,11 @@
 package me.zowpy.meetup.game.state.impl;
 
+import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
-import me.zowpy.meetup.game.state.GameState;
+import me.zowpy.meetup.game.enums.GameState;
+import me.zowpy.meetup.game.player.MeetupPlayer;
 import me.zowpy.meetup.game.state.IState;
+import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -12,17 +15,20 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 
-public class WaitingState implements IState, Listener {
+@RequiredArgsConstructor
+public class WaitingState extends SpectateState implements IState, Listener {
 
+    private final MeetupPlugin plugin;
+    
     @Override
     public void enable() {
-        Bukkit.getPluginManager().registerEvents(this, MeetupPlugin.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, plugin);
     }
 
     @Override
     public void disable() {
-        StartingState state = new StartingState(MeetupPlugin.getInstance());
-        MeetupPlugin.getInstance().getGameHandler().setGameState(state);
+        StartingState state = new StartingState(plugin);
+        plugin.getGameHandler().setGameState(state);
 
         state.enable();
 
@@ -35,17 +41,21 @@ public class WaitingState implements IState, Listener {
     }
 
     public boolean canStart() {
-        return MeetupPlugin.getInstance().getSettings().minPlayers <= Bukkit.getOnlinePlayers().size();
+        return plugin.getSettings().minPlayers <= plugin.getGameHandler().getPlayers().values()
+                .stream().filter(meetupPlayer -> !meetupPlayer.isDead() && !meetupPlayer.isSpectating())
+                .count();
     }
 
     public int remainingPlayers() {
-        return MeetupPlugin.getInstance().getSettings().minPlayers - Bukkit.getOnlinePlayers().size();
+        return (int) (plugin.getSettings().minPlayers - plugin.getGameHandler().getPlayers().values()
+                        .stream().filter(meetupPlayer -> !meetupPlayer.isDead() && !meetupPlayer.isSpectating())
+                        .count());
     }
 
     @EventHandler
     public void onLogin(AsyncPlayerPreLoginEvent event) {
-        if (!MeetupPlugin.getInstance().isReady()) {
-            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, MeetupPlugin.getInstance().getMessages().generatingWorldKick);
+        if (!plugin.isReady()) {
+            event.disallow(AsyncPlayerPreLoginEvent.Result.KICK_OTHER, plugin.getMessages().generatingWorldKick);
         }
     }
 
@@ -53,17 +63,25 @@ public class WaitingState implements IState, Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        if (MeetupPlugin.getInstance().getSettings().spawnLocation != null) {
-            player.teleport(MeetupPlugin.getInstance().getSettings().spawnLocation);
+        if (plugin.getSettings().spawnLocation != null) {
+            player.teleport(plugin.getSettings().spawnLocation);
         }
 
         PlayerUtil.reset(player);
 
+        MeetupPlayer meetupPlayer = new MeetupPlayer(player);
+        plugin.getGameHandler().getPlayers().put(player.getUniqueId(), meetupPlayer);
+        
         if (!canStart()) {
-            event.setJoinMessage(MeetupPlugin.getInstance().getMessages().requiresPlayersToStart.replace("<players>", remainingPlayers() + ""));
+            event.setJoinMessage(plugin.getMessages().requiresPlayersToStart.replace("<players>", remainingPlayers() + ""));
         }else {
             disable();
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent event) {
+        plugin.getGameHandler().getPlayers().remove(event.getPlayer().getUniqueId());
     }
 
     @EventHandler

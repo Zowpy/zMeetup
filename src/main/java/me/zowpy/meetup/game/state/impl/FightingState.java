@@ -5,8 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zowpy.meetup.MeetupPlugin;
+import me.zowpy.meetup.game.enums.SpectateReason;
 import me.zowpy.meetup.game.player.MeetupPlayer;
-import me.zowpy.meetup.game.state.GameState;
+import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.game.task.FightingStateBorderShrinkTask;
@@ -75,13 +76,10 @@ public class FightingState extends SpectateState implements IState, Listener {
                         10
                 );
             }
-
-            MeetupPlayer meetupPlayer = new MeetupPlayer(player);
-            plugin.getGameHandler().getPlayers().put(player.getUniqueId(), meetupPlayer);
         }
 
         CompletableFuture.runAsync(() -> {
-            Bukkit.getOnlinePlayers().forEach(player -> plugin.getProfileHandler().gamePlayed(player));
+            Bukkit.getOnlinePlayers().stream().filter(player -> plugin.getGameHandler().isPlaying(player)).forEach(player -> plugin.getProfileHandler().gamePlayed(player));
         });
 
         Bukkit.broadcastMessage(plugin.getMessages().started);
@@ -192,7 +190,7 @@ public class FightingState extends SpectateState implements IState, Listener {
         MeetupPlayer meetupPlayer = new MeetupPlayer(player);
 
         plugin.getGameHandler().getPlayers().put(player.getUniqueId(), meetupPlayer);
-        plugin.getGameHandler().handleSpectator(player);
+        plugin.getGameHandler().handleSpectator(player, SpectateReason.JOINED_TOO_LATE);
     }
 
     @EventHandler
@@ -279,7 +277,7 @@ public class FightingState extends SpectateState implements IState, Listener {
 
         event.setRespawnLocation(player.getLocation().clone().add(0, 15, 0));
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.getGameHandler().handleSpectator(player), 4L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> plugin.getGameHandler().handleSpectator(player, SpectateReason.DIED), 4L);
     }
 
     @EventHandler

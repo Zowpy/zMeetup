@@ -1,4 +1,4 @@
-package me.zowpy.meetup.game.state;
+package me.zowpy.meetup.game.enums;
 
 public enum GameState {
 

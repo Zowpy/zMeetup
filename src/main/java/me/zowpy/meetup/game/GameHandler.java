@@ -1,9 +1,9 @@
 package me.zowpy.meetup.game;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import me.zowpy.meetup.MeetupPlugin;
+import me.zowpy.meetup.game.enums.SpectateReason;
 import me.zowpy.meetup.game.player.MeetupPlayer;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.impl.WaitingState;
@@ -19,7 +19,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Getter
-@RequiredArgsConstructor
 public class GameHandler {
 
     private final ConcurrentMap<UUID, MeetupPlayer> players = new ConcurrentHashMap<>();
@@ -27,13 +26,15 @@ public class GameHandler {
     private final MeetupPlugin plugin;
 
     @Setter
-    private IState gameState = new WaitingState();
+    private IState gameState;
 
-    public void handleLeave(Player player) {
-        players.remove(player.getUniqueId());
+    public GameHandler(MeetupPlugin plugin) {
+        this.plugin = plugin;
+
+        gameState = new WaitingState(plugin);
     }
 
-    public void handleSpectator(Player player) {
+    public void handleSpectator(Player player, SpectateReason reason) {
 
         PlayerUtil.reset(player);
 
@@ -62,6 +63,37 @@ public class GameHandler {
                             .build()
             );
         }
+
+        player.sendMessage(plugin.getMessages().spectateReasonMessage.replace("<reason>", reason.getName()));
+    }
+
+    public void removeSpectator(Player player) {
+        PlayerUtil.reset(player);
+
+        MeetupPlayer meetupPlayer = getPlayer(player);
+        meetupPlayer.setSpectating(false);
+
+        player.setGameMode(GameMode.SURVIVAL);
+        //player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
+
+        player.setFlying(false);
+        player.setAllowFlight(false);
+
+        for (Player other : Bukkit.getOnlinePlayers()) {
+            if (other.getUniqueId().equals(player.getUniqueId())) continue;
+
+            other.showPlayer(player);
+        }
+    }
+
+    public boolean isPlaying(Player player) {
+        return isPlaying(player.getUniqueId());
+    }
+
+    public boolean isPlaying(UUID uuid) {
+        MeetupPlayer meetupPlayer = getPlayer(uuid);
+
+        return !meetupPlayer.isDead() && !meetupPlayer.isSpectating();
     }
 
     public ItemStack getSpectatorMenuItem() {
