@@ -2,3 +2,4 @@ name: zMeetup
 version: '1.0-SNAPSHOT'
 main: me.zowpy.meetup.MeetupPlugin
 authors: [ Zowpy ]
+softdepend: [ PlaceholderAPI ]

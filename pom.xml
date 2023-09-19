@@ -55,6 +55,16 @@
                                     <pattern>io.github.thatkawaiisam.assemble</pattern>
                                     <shadedPattern>me.zowpy.meetup.utils.assemble</shadedPattern>
                                 </relocation>
+
+                                <relocation>
+                                    <pattern>com.mongodb</pattern>
+                                    <shadedPattern>me.zowpy.meetup.internal.mongodb</shadedPattern>
+                                </relocation>
+
+                                <relocation>
+                                    <pattern>com.google.gson</pattern>
+                                    <shadedPattern>me.zowpy.meetup.internal.gson</shadedPattern>
+                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>

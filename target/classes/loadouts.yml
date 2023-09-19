@@ -25,6 +25,8 @@ GOLDEN_APPLE:
     - GOLDEN_APPLE:amount=4
     - GOLDEN_APPLE:amount=5
     - GOLDEN_APPLE:amount=6
+    - GOLDEN_APPLE:amount=7
+    - GOLDEN_APPLE:amount=8
 GOLDEN_HEAD:
   items:
     - GOLDEN_APPLE:name=&6Golden Head
