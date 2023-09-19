@@ -47,11 +47,10 @@ public class StartingState extends SpectateState implements IState, Listener {
         started = System.currentTimeMillis();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            PlayerUtil.reset(player);
-
             teleport(player);
 
             if (plugin.getGameHandler().isPlaying(player)) {
+                PlayerUtil.reset(player);
                 sit(player);
 
                 CompletableFuture.runAsync(() -> {

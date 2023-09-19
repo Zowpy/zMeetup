@@ -23,7 +23,7 @@ public class SpectateCommand {
 
         boolean playing = plugin.getGameHandler().isPlaying(player);
 
-        if (!playing && plugin.getGameHandler().getGameState().getGameState() == GameState.FIGHTING) {
+        if (!playing && plugin.getGameHandler().getGameState().getGameState() != GameState.WAITING) {
             player.sendMessage(CC.RED + "You can't do this anymore.");
             return;
         }

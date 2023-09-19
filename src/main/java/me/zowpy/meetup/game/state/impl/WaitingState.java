@@ -14,19 +14,35 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 @RequiredArgsConstructor
 public class WaitingState extends SpectateState implements IState, Listener {
 
     private final MeetupPlugin plugin;
+
+    private BukkitTask checkTask;
     
     @Override
     public void enable() {
         Bukkit.getPluginManager().registerEvents(this, plugin);
+
+        checkTask = new BukkitRunnable() {
+
+            @Override
+            public void run() {
+                if (canStart()) {
+                    disable();
+                }
+            }
+        }.runTaskTimer(plugin, 20L, 20L);
     }
 
     @Override
     public void disable() {
+        checkTask.cancel();
+
         StartingState state = new StartingState(plugin);
         plugin.getGameHandler().setGameState(state);
 
@@ -68,14 +84,9 @@ public class WaitingState extends SpectateState implements IState, Listener {
         }
 
         PlayerUtil.reset(player);
-
-        MeetupPlayer meetupPlayer = new MeetupPlayer(player);
-        plugin.getGameHandler().getPlayers().put(player.getUniqueId(), meetupPlayer);
         
         if (!canStart()) {
             event.setJoinMessage(plugin.getMessages().requiresPlayersToStart.replace("<players>", remainingPlayers() + ""));
-        }else {
-            disable();
         }
     }
 
