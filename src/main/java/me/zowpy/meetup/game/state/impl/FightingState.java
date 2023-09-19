@@ -2,6 +2,7 @@ package me.zowpy.meetup.game.state.impl;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.player.MeetupPlayer;
@@ -23,14 +24,20 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -279,6 +286,39 @@ public class FightingState extends SpectateState implements IState, Listener {
     public void onConsume(PlayerItemConsumeEvent event) {
         if (LoadoutHandler.GOLDEN_HEAD.isSimilar(event.getItem())) {
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 200, 1), true);
+        }
+    }
+
+    @EventHandler
+    public void onOpen(InventoryOpenEvent event) {
+        if (event.getInventory().getType() != InventoryType.ENCHANTING) return;
+
+        Inventory inventory = event.getInventory();
+        inventory.setItem(1, new ItemStack(Material.INK_SACK, 64, (short) 4));
+    }
+
+    @EventHandler
+    @SneakyThrows
+    public void onClick(InventoryClickEvent event) {
+        if (event.getInventory().getType() == InventoryType.ENCHANTING) {
+            if (event.getSlot() == 1) {
+                event.setCancelled(true);
+                event.setResult(Event.Result.DENY);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onClose(InventoryCloseEvent event) {
+        if (event.getInventory().getType() == InventoryType.ENCHANTING) {
+
+            Player player = (Player) event.getPlayer();
+
+            event.getInventory().setItem(1, new ItemStack(Material.AIR));
+
+            if (player.getItemOnCursor() != null && player.getItemOnCursor().getType() == Material.INK_SACK && player.getItemOnCursor().getDurability() == 4) {
+                player.setItemOnCursor(null);
+            }
         }
     }
 

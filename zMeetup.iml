@@ -9,6 +9,9 @@
       </configuration>
     </facet>
   </component>
+  <component name="McpModuleSettings">
+    <option name="srgType" value="SRG" />
+  </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
