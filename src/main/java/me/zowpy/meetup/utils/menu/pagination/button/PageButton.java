@@ -1,8 +1,8 @@
 package me.zowpy.meetup.utils.menu.pagination.button;
 
 import lombok.AllArgsConstructor;
+import me.zowpy.meetup.utils.ItemBuilder;
 import me.zowpy.meetup.utils.menu.pagination.PaginatedMenu;
-import me.zowpy.meetup.utils.menu.utils.ItemBuilder;
 import me.zowpy.meetup.utils.menu.buttons.Button;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -13,8 +13,8 @@ import org.bukkit.inventory.ItemStack;
 @AllArgsConstructor
 public class PageButton extends Button {
 
-    private int mod;
-    private PaginatedMenu menu;
+    private final int mod;
+    private final PaginatedMenu menu;
 
     @Override
     public ItemStack getButtonItem(Player player) {

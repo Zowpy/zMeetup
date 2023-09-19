@@ -7,7 +7,7 @@ import xyz.mkotb.configapi.comment.Comment;
 import java.util.Arrays;
 import java.util.List;
 
-public class Messages {
+public class MessagesConfig {
 
     @Coloured
     public String generatingWorldKick = "&cThe map is not ready yet!";
@@ -72,14 +72,11 @@ public class Messages {
     @Coloured
     public String drawKickMessage = "&eThank you for playing! &dIt was a draw";
 
+    @Comment("This message requires BungeeCord or Velocity.")
     @Coloured
-    public String announce = CC.PINK + CC.BOLD + "UHC Meetup " + CC.GRAY + "» <player>&e wants you to play!";
+    public String announce = CC.PINK + CC.BOLD + "UHC Meetup " + CC.GRAY + "» <player>&e wants you to play! &a(Join)";
 
-    @Comment("This clickable message requires BungeeCord.")
-    @Coloured
-    public String announceJoin = "&a (Join)";
-
-    public List<String> announceJoinHover = Arrays.asList(
+    public List<String> announceHover = Arrays.asList(
             "&eClick to join um-01",
             " ",
             "&c&lWarning: &r&cThis will switch your server!"

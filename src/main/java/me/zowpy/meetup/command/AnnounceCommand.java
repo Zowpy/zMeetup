@@ -8,12 +8,14 @@ import me.zowpy.command.annotation.Sender;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.utils.BungeeUtil;
 import me.zowpy.meetup.utils.CC;
-import me.zowpy.meetup.utils.TextBuilder;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class AnnounceCommand {
@@ -23,7 +25,7 @@ public class AnnounceCommand {
     @Permission("meetup.command.announce")
     @Command(name = "announce")
     public void announce(@Sender Player player) {
-        TextBuilder textBuilder = new TextBuilder();
+        TextComponent textBuilder = new TextComponent();
 
         if (plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
             textBuilder.setText(PlaceholderAPI.setPlaceholders(player, plugin.getMessages().announce.replace("<player>", player.getName())));
@@ -31,15 +33,23 @@ public class AnnounceCommand {
             textBuilder.setText(plugin.getMessages().announce.replace("<player>", player.getName()));
         }
 
-        TextComponent click = new TextComponent(plugin.getMessages().announceJoin);
-        click.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, plugin.getSettings().joinCommand));
-        click.setHoverEvent(new HoverEvent(
+        textBuilder.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, plugin.getSettings().joinCommand));
+
+        List<String> s = new ArrayList<>();
+
+        for (int i = 0; i < plugin.getMessages().announceHover.size(); i++) {
+            if (i > 0) {
+                s.add("\n" + CC.translate(plugin.getMessages().announceHover.get(i)));
+            }else {
+                s.add(CC.translate(plugin.getMessages().announceHover.get(i)));
+            }
+        }
+
+        textBuilder.setHoverEvent(new HoverEvent(
                 HoverEvent.Action.SHOW_TEXT,
-                plugin.getMessages().announceJoinHover.stream().map(s -> new TextComponent(CC.translate("\n" + s))).toArray(BaseComponent[]::new)
+                s.stream().map(TextComponent::new).toArray(BaseComponent[]::new)
         ));
 
-        textBuilder.addExtra(click);
-
-        BungeeUtil.announce(player, textBuilder.build());
+        BungeeUtil.announce(player, textBuilder);
     }
 }

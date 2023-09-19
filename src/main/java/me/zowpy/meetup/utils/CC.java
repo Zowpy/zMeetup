@@ -1,7 +1,6 @@
 package me.zowpy.meetup.utils;
 
 import me.zowpy.meetup.MeetupPlugin;
-import me.zowpy.meetup.config.Settings;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 

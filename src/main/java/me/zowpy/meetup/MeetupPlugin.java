@@ -30,8 +30,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
     private static MeetupPlugin instance;
 
     private ConfigFactory configFactory;
-    private Settings settings;
-    private Messages messages;
+    private SettingsConfig settings;
+    private MessagesConfig messages;
     private ScoreboardConfig scoreboardConfig;
     private HotbarConfig hotbarConfig;
     private MenusConfig menusConfig;
@@ -55,8 +55,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         instance = this;
 
         configFactory = ConfigFactory.newFactory(this);
-        settings = configFactory.fromFile("settings", Settings.class);
-        messages = configFactory.fromFile("messages", Messages.class);
+        settings = configFactory.fromFile("settings", SettingsConfig.class);
+        messages = configFactory.fromFile("messages", MessagesConfig.class);
         scoreboardConfig = configFactory.fromFile("scoreboard", ScoreboardConfig.class);
         hotbarConfig = configFactory.fromFile("hotbar", HotbarConfig.class);
         menusConfig = configFactory.fromFile("menus", MenusConfig.class);
