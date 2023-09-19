@@ -4,7 +4,6 @@ me\zowpy\meetup\utils\ItemHelper.class
 me\zowpy\meetup\game\prevention\PreventionListener.class
 me\zowpy\meetup\game\enums\GameState.class
 me\zowpy\meetup\menu\LoadoutMenu.class
-me\zowpy\meetup\config\Messages.class
 me\zowpy\meetup\loadout\Loadout.class
 me\zowpy\meetup\game\scenario\Scenario.class
 me\zowpy\meetup\border\event\border\BorderEvent.class
@@ -32,7 +31,6 @@ me\zowpy\meetup\config\MenusConfig.class
 me\zowpy\meetup\game\state\impl\EndingState.class
 me\zowpy\meetup\game\scenario\impl\TimeBombScenario.class
 me\zowpy\meetup\utils\ItemBuilder.class
-me\zowpy\meetup\config\Settings.class
 me\zowpy\meetup\game\state\impl\StartingState.class
 me\zowpy\meetup\game\state\impl\WaitingState.class
 me\zowpy\meetup\loadout\LoadoutItem.class
@@ -49,10 +47,12 @@ me\zowpy\meetup\border\action\DefaultBorderActions.class
 me\zowpy\meetup\config\ScoreboardConfig.class
 me\zowpy\meetup\border\event\player\PlayerEnterBorderEvent.class
 me\zowpy\meetup\utils\menu\Menu.class
+me\zowpy\meetup\config\SettingsConfig.class
 me\zowpy\meetup\border\action\DefaultBorderActions$1.class
 me\zowpy\meetup\utils\menu\Menu$2.class
 me\zowpy\meetup\menu\SpectatingMenu$1.class
 me\zowpy\meetup\utils\menu\pagination\button\PageButton.class
+me\zowpy\meetup\config\MessagesConfig.class
 me\zowpy\meetup\utils\menu\buttons\impl\CloseButton.class
 me\zowpy\meetup\game\state\SpectateState.class
 me\zowpy\meetup\border\BorderConfiguration.class

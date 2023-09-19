@@ -72,7 +72,7 @@ public class MessagesConfig {
     @Coloured
     public String drawKickMessage = "&eThank you for playing! &dIt was a draw";
 
-    @Comment("This message requires BungeeCord or Velocity.")
+    @Comment({"This message requires BungeeCord or Velocity.", "This message supports PlaceholderAPI"})
     @Coloured
     public String announce = CC.PINK + CC.BOLD + "UHC Meetup " + CC.GRAY + "» <player>&e wants you to play! &a(Join)";
 
