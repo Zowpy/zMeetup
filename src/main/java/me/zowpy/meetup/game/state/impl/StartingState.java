@@ -24,6 +24,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -225,6 +226,11 @@ public class StartingState extends SpectateState implements IState, Listener {
 
     @EventHandler
     public void onDamage(EntityDamageEvent event) {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onFoodLevel(FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }
 }

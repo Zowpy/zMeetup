@@ -12,6 +12,7 @@ import org.bukkit.event.*;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -131,6 +132,11 @@ public class WaitingState extends SpectateState implements IState, Listener {
 
     @EventHandler
     public void onConsume(PlayerItemConsumeEvent event) {
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onFoodLevel(FoodLevelChangeEvent event) {
         event.setCancelled(true);
     }
 
