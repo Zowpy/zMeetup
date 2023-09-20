@@ -144,4 +144,15 @@ public class MessagesConfig {
 
     @Coloured
     public String spectateSubtitle = "You are now spectator!";
+
+    @Coloured
+    public String editingLoadout = "&aYou are now editing your loadout.";
+
+    public List<String> modifiedLoadout = Arrays.asList(
+            "&eYou've modified your loadout!",
+            "&7&oIf you need to reset your loadout try &e&o/resetloadout"
+    );
+
+    @Coloured
+    public String resetLoadout = "&aYou've reset your loadout!";
 }

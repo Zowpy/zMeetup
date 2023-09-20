@@ -43,7 +43,7 @@ public class SettingsConfig {
 
     @Comment({"These are all the border sizes that will occur in-game each border size stays for 2 minutes", "after that it changes to another smaller one, if a smaller one is not present the game will end in a draw", "Make sure all the values below are smaller than the starting border size"})
     public List<Integer> borderSizes = Arrays.asList(
-            100, 75, 50, 50, 25, 10
+            100, 75, 50, 25, 10
     );
 
     @Comment("Should the plugin display titles?")

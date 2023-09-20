@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.loadout.LoadoutItem;
 import me.zowpy.meetup.profile.Profile;
+import me.zowpy.meetup.utils.CC;
 import me.zowpy.meetup.utils.menu.Menu;
 import me.zowpy.meetup.utils.menu.buttons.Button;
 import me.zowpy.meetup.utils.menu.buttons.impl.DisplayButton;
@@ -91,6 +92,9 @@ public class LoadoutMenu extends Menu {
             MeetupPlugin.getInstance().getProfileHandler().save(profile);
         });
 
+        MeetupPlugin.getInstance().getMessages().modifiedLoadout.forEach(s -> {
+            player.sendMessage(CC.translate(s));
+        });
     }
 
     private int inventoryOrder(int slot) {
