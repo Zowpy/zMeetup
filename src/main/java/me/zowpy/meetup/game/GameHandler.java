@@ -39,6 +39,7 @@ public class GameHandler {
 
     public void handleSpectator(Player player, SpectateReason reason) {
 
+        PlayerUtil.unsit(player);
         PlayerUtil.reset(player);
 
         MeetupPlayer meetupPlayer = getPlayer(player);

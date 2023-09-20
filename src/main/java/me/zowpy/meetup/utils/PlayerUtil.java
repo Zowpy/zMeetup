@@ -1,11 +1,13 @@
 package me.zowpy.meetup.utils;
 
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.EntityPlayer;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle;
+import me.zowpy.meetup.MeetupPlugin;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.spigotmc.AsyncCatcher;
 
@@ -60,5 +62,36 @@ public class PlayerUtil {
 
     public static void resetTitleBar(Player player) {
         player.resetTitle();
+    }
+
+    public static void sit(Player player) {
+        Location location = player.getLocation().clone();
+
+        EntityBat bat = new EntityBat(((CraftWorld) location.getWorld()).getHandle());
+        bat.setLocation(location.getX(), location.getY(), location.getZ(), 0.0F, 0.0F);
+        bat.setInvisible(true);
+
+        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+
+        PacketPlayOutSpawnEntityLiving entity = new PacketPlayOutSpawnEntityLiving(bat);
+
+        entityPlayer.playerConnection.sendPacket(entity);
+
+        player.setMetadata("sit", new FixedMetadataValue(MeetupPlugin.getInstance(), bat.getId()));
+
+        PacketPlayOutAttachEntity attachEntity = new PacketPlayOutAttachEntity(0, entityPlayer, bat);
+        entityPlayer.playerConnection.sendPacket(attachEntity);
+
+    }
+
+    public static void unsit(Player player) {
+
+        if (player.hasMetadata("sit")) {
+
+            int entityId = player.getMetadata("sit").get(0).asInt();
+
+            PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(entityId);
+            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(destroy);
+        }
     }
 }

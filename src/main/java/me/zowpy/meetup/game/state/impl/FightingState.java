@@ -14,7 +14,6 @@ import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.game.task.FightingStateBorderShrinkTask;
 import me.zowpy.meetup.loadout.LoadoutHandler;
 import me.zowpy.meetup.utils.PlayerUtil;
-import net.minecraft.server.v1_8_R3.PacketPlayOutEntityDestroy;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,7 +23,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -70,7 +68,7 @@ public class FightingState extends SpectateState implements IState, Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            unsit(player);
+            PlayerUtil.unsit(player);
 
             if (plugin.getSettings().titles) {
                 PlayerUtil.sendTitleBar(
@@ -130,17 +128,6 @@ public class FightingState extends SpectateState implements IState, Listener {
     @Override
     public GameState getGameState() {
         return GameState.FIGHTING;
-    }
-
-    private void unsit(Player player) {
-
-        if (player.hasMetadata("sit")) {
-
-            int entityId = player.getMetadata("sit").get(0).asInt();
-
-            PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(entityId);
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(destroy);
-        }
     }
 
     private void deathChest(Player player, List<ItemStack> drops) {

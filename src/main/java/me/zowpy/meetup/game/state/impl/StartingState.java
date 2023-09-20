@@ -52,7 +52,7 @@ public class StartingState extends SpectateState implements IState, Listener {
 
             if (plugin.getGameHandler().isPlaying(player)) {
                 PlayerUtil.reset(player);
-                sit(player);
+                PlayerUtil.sit(player);
 
                 CompletableFuture.runAsync(() -> {
                     plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
@@ -112,37 +112,6 @@ public class StartingState extends SpectateState implements IState, Listener {
         return GameState.STARTING;
     }
 
-    private void sit(Player player) {
-        Location location = player.getLocation().clone();
-
-        EntityBat bat = new EntityBat(((CraftWorld) location.getWorld()).getHandle());
-        bat.setLocation(location.getX(), location.getY(), location.getZ(), 0.0F, 0.0F);
-        bat.setInvisible(true);
-
-        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
-
-        PacketPlayOutSpawnEntityLiving entity = new PacketPlayOutSpawnEntityLiving(bat);
-
-        entityPlayer.playerConnection.sendPacket(entity);
-
-        player.setMetadata("sit", new FixedMetadataValue(plugin, bat.getId()));
-
-        PacketPlayOutAttachEntity attachEntity = new PacketPlayOutAttachEntity(0, entityPlayer, bat);
-        entityPlayer.playerConnection.sendPacket(attachEntity);
-
-    }
-
-    private void unsit(Player player) {
-
-        if (player.hasMetadata("sit")) {
-
-            int entityId = player.getMetadata("sit").get(0).asInt();
-
-            PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(entityId);
-            ((CraftPlayer) player).getHandle().playerConnection.sendPacket(destroy);
-        }
-    }
-
     private void teleport(Player player) {
         World world = Bukkit.getWorld(plugin.getSettings().worldName);
         Border border = plugin.getBorderHandler().getBorderForWorld(world);
@@ -163,7 +132,7 @@ public class StartingState extends SpectateState implements IState, Listener {
         PlayerUtil.reset(player);
 
         teleport(player);
-        sit(player);
+        PlayerUtil.sit(player);
 
         if (empty(player)) {
             CompletableFuture.runAsync(() -> {
@@ -179,7 +148,7 @@ public class StartingState extends SpectateState implements IState, Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        unsit(event.getPlayer());
+        PlayerUtil.unsit(event.getPlayer());
     }
 
     @EventHandler
