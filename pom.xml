@@ -6,7 +6,7 @@
 
     <groupId>me.zowpy.meetup</groupId>
     <artifactId>zMeetup</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>zMeetup</name>
