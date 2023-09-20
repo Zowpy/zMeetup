@@ -2,6 +2,7 @@ package me.zowpy.meetup;
 
 import io.github.thatkawaiisam.assemble.Assemble;
 import lombok.Getter;
+import lombok.Setter;
 import me.zowpy.command.CommandAPI;
 import me.zowpy.meetup.adapter.ScoreboardAdapter;
 import me.zowpy.meetup.border.BorderHandler;
@@ -57,6 +58,9 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
     private boolean ready;
 
+    @Setter
+    private boolean canStart = true;
+
     @Override
     public void onEnable() {
         instance = this;
@@ -85,6 +89,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         gameHandler = new GameHandler(this);
         gameHandler.getGameState().enable();
+
+        if (!canStart) return;
 
         borderHandler = new BorderHandler(this);
 
