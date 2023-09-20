@@ -3,7 +3,6 @@ package me.zowpy.meetup.game.state.impl;
 import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.enums.GameState;
-import me.zowpy.meetup.game.player.MeetupPlayer;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.PlayerUtil;
@@ -36,7 +35,7 @@ public class WaitingState extends SpectateState implements IState, Listener {
                     disable();
                 }
             }
-        }.runTaskTimer(plugin, 20L, 20L);
+        }.runTaskTimer(plugin, 20L, 2L);
     }
 
     @Override

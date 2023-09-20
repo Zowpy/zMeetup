@@ -7,10 +7,13 @@ import me.zowpy.meetup.game.enums.SpectateReason;
 import me.zowpy.meetup.game.player.MeetupPlayer;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.impl.WaitingState;
+import me.zowpy.meetup.utils.CC;
 import me.zowpy.meetup.utils.ItemBuilder;
 import me.zowpy.meetup.utils.PlayerUtil;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -42,15 +45,22 @@ public class GameHandler {
         meetupPlayer.setSpectating(true);
 
         player.setGameMode(GameMode.CREATIVE);
-        //player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
 
         player.setAllowFlight(true);
         player.setFlying(true);
+
+        player.setPlayerListName(CC.GRAY + player.getDisplayName());
+
+        EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
+        //entityPlayer.listName = new ChatComponentText(CC.GRAY + player.getDisplayName());
+
+        PacketPlayOutPlayerInfo info = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, entityPlayer);
 
         for (Player other : Bukkit.getOnlinePlayers()) {
             if (other.getUniqueId().equals(player.getUniqueId())) continue;
 
             other.hidePlayer(player);
+            ((CraftPlayer) other).getHandle().playerConnection.sendPacket(info);
         }
 
         player.getInventory().setItem(plugin.getHotbarConfig().spectateMenuSlot, getSpectatorMenuItem());
@@ -64,6 +74,10 @@ public class GameHandler {
             );
         }
 
+        if (plugin.getSettings().titles) {
+            PlayerUtil.sendTitleBar(player, plugin.getMessages().spectateTitle, plugin.getMessages().spectateSubtitle, 0, 80, 0);
+        }
+
         player.sendMessage(plugin.getMessages().spectateReasonMessage.replace("<reason>", reason.getName()));
     }
 
@@ -75,6 +89,8 @@ public class GameHandler {
 
         player.setGameMode(GameMode.SURVIVAL);
         //player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 0, false, false));
+
+        player.setPlayerListName(player.getDisplayName());
 
         player.setFlying(false);
         player.setAllowFlight(false);

@@ -8,6 +8,7 @@ import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.CC;
+import me.zowpy.meetup.utils.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
@@ -35,6 +36,8 @@ public class EndingState extends SpectateState implements IState, Listener {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
 
             Bukkit.getOnlinePlayers().forEach(player -> {
+                PlayerUtil.resetTitleBar(player);
+
                 if (winner == null) {
                     player.kickPlayer(plugin.getMessages().drawKickMessage);
                 }else {
@@ -42,7 +45,7 @@ public class EndingState extends SpectateState implements IState, Listener {
                     if (!winner.getUuid().equals(player.getUniqueId())) {
                         plugin.getProfileHandler().loss(player);
                     }
-                    
+
                     player.kickPlayer(plugin.getMessages().winnerKickMessage.replace("<winner>", winner.getName()));
                 }
             });

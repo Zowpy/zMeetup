@@ -5,9 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zowpy.meetup.MeetupPlugin;
+import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.enums.SpectateReason;
 import me.zowpy.meetup.game.player.MeetupPlayer;
-import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.game.task.FightingStateBorderShrinkTask;
@@ -32,7 +32,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -341,7 +340,7 @@ public class FightingState extends SpectateState implements IState, Listener {
 
             if (health > 0.0) {
                 damager.sendMessage(plugin.getMessages().arrowHit.replace("<player>", entity.getName())
-                        .replace("<health>", health + ""));
+                        .replace("<hearts>", health + ""));
             }
         }
 

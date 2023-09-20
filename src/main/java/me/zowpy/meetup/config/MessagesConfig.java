@@ -135,4 +135,10 @@ public class MessagesConfig {
 
     @Coloured
     public String arrowHit = "&d<player> &eis now at &d<hearts>❤";
+
+    @Coloured
+    public String spectateTitle = "&c&lDEAD";
+
+    @Coloured
+    public String spectateSubtitle = "You are now spectator!";
 }

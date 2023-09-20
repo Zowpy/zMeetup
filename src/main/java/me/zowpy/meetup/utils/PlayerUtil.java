@@ -42,12 +42,10 @@ public class PlayerUtil {
     public static void sendTitleBar(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
         EntityPlayer entityPlayer = ((CraftPlayer) player).getHandle();
 
-        PacketPlayOutTitle reset = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.RESET, null);
-        entityPlayer.playerConnection.sendPacket(reset);
+        resetTitleBar(player);
 
         PacketPlayOutTitle times = new PacketPlayOutTitle(fadeIn, stay, fadeOut);
         entityPlayer.playerConnection.sendPacket(times);
-
 
         if (title != null) {
             PacketPlayOutTitle packetTitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.TITLE, new ChatComponentText(title));
@@ -58,5 +56,9 @@ public class PlayerUtil {
             PacketPlayOutTitle packetSubtitle = new PacketPlayOutTitle(PacketPlayOutTitle.EnumTitleAction.SUBTITLE, new ChatComponentText(subtitle));
             entityPlayer.playerConnection.sendPacket(packetSubtitle);
         }
+    }
+
+    public static void resetTitleBar(Player player) {
+        player.resetTitle();
     }
 }

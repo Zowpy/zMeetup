@@ -3,7 +3,10 @@ package me.zowpy.meetup.game.listener;
 import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.game.player.MeetupPlayer;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
+import net.minecraft.server.v1_8_R3.PacketPlayOutPlayerInfo;
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -28,6 +31,10 @@ public class GameListener implements Listener {
                     Player bukkitPlayer = Bukkit.getPlayer(meetupPlayer1.getUuid());
                     player.hidePlayer(bukkitPlayer);
 
+                    EntityPlayer entityPlayer = ((CraftPlayer) bukkitPlayer).getHandle();
+
+                    PacketPlayOutPlayerInfo info = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, entityPlayer);
+                    ((CraftPlayer) player).getHandle().playerConnection.sendPacket(info);
                 });
     }
 }

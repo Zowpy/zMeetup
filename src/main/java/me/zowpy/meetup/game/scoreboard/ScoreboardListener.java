@@ -1,6 +1,7 @@
 package me.zowpy.meetup.game.scoreboard;
 
 import io.github.thatkawaiisam.assemble.events.AssembleBoardCreatedEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -11,15 +12,13 @@ public class ScoreboardListener implements Listener {
 
     @EventHandler
     public void onPlayer(AssembleBoardCreatedEvent event) {
-        System.out.println(event.getBoard().getUuid().toString());
-
         Scoreboard scoreboard = event.getBoard().getScoreboard();
-        Objective objective = scoreboard.getObjective("Health");
 
-        if (objective == null) {
-            objective = scoreboard.registerNewObjective("Health", "health");
+        if (scoreboard.getObjective("Health") == null) {
+            Objective objective = scoreboard.registerNewObjective("Health", "health");
+            objective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
+
+            Bukkit.getOnlinePlayers().forEach(player -> objective.getScore(player.getName()).setScore((int) player.getHealth()));
         }
-
-        objective.setDisplaySlot(DisplaySlot.PLAYER_LIST);
     }
 }
