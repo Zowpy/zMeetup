@@ -38,9 +38,12 @@ public class MessagesConfig {
     @Coloured
     public String borderShrink = "&eThe border will shrink to &d<blocks>&e blocks in &d<time> <unit>&e.";
 
+    @Coloured
+    public String gameEnding = "&eThe game will end in &d<time> <unit>&e.";
+
     @Comment("the format that will be used for death message. (<player>) This supports PlaceholderAPI")
     @Coloured
-    public String playerFormat = "%volcano_profile_colored_name%";
+    public String playerFormat = "<player>";
 
     @Coloured
     public String killMessage = "<player> &7[&c<player_kills>&7] &ewas slain by <killer> &7[&c<killer_kills>&7] &eusing &c<item>";

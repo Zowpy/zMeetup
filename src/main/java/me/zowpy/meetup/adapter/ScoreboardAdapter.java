@@ -57,7 +57,14 @@ public class ScoreboardAdapter implements AssembleAdapter {
             FightingState fightingState = (FightingState) plugin.getGameHandler().getGameState();
             MeetupPlayer meetupPlayer = plugin.getGameHandler().getPlayer(player);
 
-            int secondsLeft = (int) (((fightingState.getShrinkTask().getLastShrink() + (FightingStateBorderShrinkTask.SECONDS_PER_UPDATE * 1000)) - System.currentTimeMillis()) / 1000);
+            String borderTimerString = "";
+
+            if (fightingState.getShrinkTask() != null) {
+                int secondsLeft = (int) (((fightingState.getShrinkTask().getLastShrink() + (FightingStateBorderShrinkTask.SECONDS_PER_UPDATE * 1000)) - System.currentTimeMillis()) / 1000);
+                borderTimerString = plugin.getScoreboardConfig().borderTimerFormat.replace("<seconds>", secondsLeft + "");
+            }
+
+            String finalBorderTimerString = borderTimerString;
 
             if (plugin.getScenarioHandler().isEnabled("noclean") && plugin.getScenarioHandler().getScenario(NoCleanScenario.class).getNoClean().containsKey(player.getUniqueId())) {
 
@@ -66,7 +73,7 @@ public class ScoreboardAdapter implements AssembleAdapter {
                 return plugin.getScoreboardConfig().fighting.stream()
                         .map(s -> CC.translate(s
                                 .replace("<border>", plugin.getBorderHandler().getBorderForWorld(world).getSize() + "")
-                                .replace("<seconds>", secondsLeft + "")
+                                .replace("<borderTimer>", finalBorderTimerString)
                                 .replace("<players>", fightingState.remainingPlayers() + "")
                                 .replace("<ping>", ((CraftPlayer) player).getHandle().ping + "")
                                 .replace("<kills>", meetupPlayer.getKills() + "")
@@ -76,11 +83,12 @@ public class ScoreboardAdapter implements AssembleAdapter {
                         )).collect(Collectors.toList());
             }
 
+
             return plugin.getScoreboardConfig().fighting.stream()
                     .filter(s -> !s.contains("<noclean>") && !s.contains("<spaceifnoclean>"))
                     .map(s -> CC.translate(s
                             .replace("<border>", plugin.getBorderHandler().getBorderForWorld(world).getSize() + "")
-                            .replace("<seconds>", secondsLeft + "")
+                            .replace("<borderTimer>", finalBorderTimerString)
                             .replace("<players>", fightingState.remainingPlayers() + "")
                             .replace("<ping>", ((CraftPlayer) player).getHandle().ping + "")
                             .replace("<kills>", meetupPlayer.getKills() + "")

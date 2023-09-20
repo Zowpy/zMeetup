@@ -33,6 +33,9 @@ public class SettingsConfig {
     @Comment("How many seconds should the countdown be?")
     public int seconds = 60;
 
+    @Comment("Should we end the game as a draw after 2 minutes have passed in the final border")
+    public boolean endAfterFinalBorder = false;
+
     @Comment("Which biomes should we use in the uhc meetup world?")
     public List<Biome> biomes = Arrays.asList(
             Biome.SAVANNA, Biome.PLAINS

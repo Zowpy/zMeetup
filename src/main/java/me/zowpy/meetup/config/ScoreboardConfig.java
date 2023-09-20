@@ -28,10 +28,11 @@ public class ScoreboardConfig {
     );
 
     public String noCleanFormat = "&cNo clean: &d<seconds>";
+    public String borderTimerFormat = " &f(&d<seconds>&f)";
 
     public List<String> fighting = Arrays.asList(
             CC.MENU_BAR,
-            "Border: " + CC.PINK + "<border> &f(&d<seconds>&f)",
+            "Border: " + CC.PINK + "<border><borderTimer>",
             "Players: " + CC.PINK + "<players>",
             "Ping: " + CC.PINK + "<ping> ms",
             "Kills: " + CC.PINK + "<kills>",

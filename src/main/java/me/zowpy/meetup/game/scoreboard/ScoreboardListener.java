@@ -24,7 +24,7 @@ public class ScoreboardListener implements Listener {
             h_belowName.setDisplayName(CC.DARK_RED + "❤");
 
             Bukkit.getOnlinePlayers().forEach(player -> {
-                objective.getScore(player.getName()).setScore((int) player.getHealth());
+                objective.getScore(player.getName()).setScore((int) Math.floor(player.getHealth()));
                 h_belowName.getScore(player.getName()).setScore((int) Math.floor(player.getHealth()));
             });
         }

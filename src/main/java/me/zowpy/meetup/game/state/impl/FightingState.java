@@ -2,6 +2,7 @@ package me.zowpy.meetup.game.state.impl;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import me.clip.placeholderapi.PlaceholderAPI;
 import me.zowpy.meetup.MeetupPlugin;
@@ -57,7 +58,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class FightingState extends SpectateState implements IState, Listener {
 
-    @Getter
+    @Getter @Setter
     private FightingStateBorderShrinkTask shrinkTask;
 
     private BukkitTask checkTask;
@@ -103,6 +104,11 @@ public class FightingState extends SpectateState implements IState, Listener {
 
     @Override
     public void disable() {
+        if (shrinkTask != null)
+            shrinkTask.cancel();
+
+        shrinkTask = null;
+
         checkTask.cancel();
 
         List<MeetupPlayer> winners = plugin.getGameHandler().getPlayers().values()
@@ -118,8 +124,6 @@ public class FightingState extends SpectateState implements IState, Listener {
         }
 
         endingState.enable();
-
-        shrinkTask.cancel();
         HandlerList.unregisterAll(this);
     }
 

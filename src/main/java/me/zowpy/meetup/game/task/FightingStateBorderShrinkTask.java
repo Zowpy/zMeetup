@@ -3,6 +3,7 @@ package me.zowpy.meetup.game.task;
 import lombok.Getter;
 import me.zowpy.meetup.MeetupPlugin;
 import me.zowpy.meetup.border.Border;
+import me.zowpy.meetup.game.state.impl.FightingState;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -39,19 +40,18 @@ public class FightingStateBorderShrinkTask extends BukkitRunnable {
 
     @Override
     public void run() {
-
-        if (nextBorderSize == -1) {
-            plugin.getGameHandler().getGameState().disable();
-            return;
-        }
-
         int secondsLeft = (int) (((lastShrink + (SECONDS_PER_UPDATE * 1000)) - System.currentTimeMillis()) / 1000);
 
         switch (secondsLeft) {
             case 60: {
-                Bukkit.broadcastMessage(plugin.getMessages().borderShrink.replace("<time>", "1")
-                        .replace("<unit>", "minute")
-                        .replace("<blocks>", nextBorderSize + ""));
+                if (nextBorderSize == -1) {
+                    Bukkit.broadcastMessage(plugin.getMessages().gameEnding.replace("<time>", "1")
+                            .replace("<unit>", "minute"));
+                } else {
+                    Bukkit.broadcastMessage(plugin.getMessages().borderShrink.replace("<time>", "1")
+                            .replace("<unit>", "minute")
+                            .replace("<blocks>", nextBorderSize + ""));
+                }
                 break;
             }
 
@@ -63,15 +63,24 @@ public class FightingStateBorderShrinkTask extends BukkitRunnable {
             case 3:
             case 2:
             case 1: {
-                Bukkit.broadcastMessage(plugin.getMessages().borderShrink.replace("<time>", secondsLeft + "")
-                        .replace("<unit>", secondsLeft == 1 ? "second" : "seconds")
-                        .replace("<blocks>", nextBorderSize + ""));
+                if (nextBorderSize == -1) {
+                    Bukkit.broadcastMessage(plugin.getMessages().gameEnding.replace("<time>", secondsLeft + "")
+                            .replace("<unit>", secondsLeft == 1 ? "second" : "seconds"));
+                } else {
+                    Bukkit.broadcastMessage(plugin.getMessages().borderShrink.replace("<time>", secondsLeft + "")
+                            .replace("<unit>", secondsLeft == 1 ? "second" : "seconds")
+                            .replace("<blocks>", nextBorderSize + ""));
+                }
             }
 
         }
 
         if (secondsLeft <= 0) {
-            //plugin.getBorderManager().setCurrentRadius(nextBorderSize);
+            if (nextBorderSize == -1 && plugin.getSettings().endAfterFinalBorder) {
+                plugin.getGameHandler().getGameState().disable();
+                return;
+            }
+
             Border border = plugin.getBorderHandler().getBorderForWorld(world);
             int currentSize = nextBorderSize;
 
@@ -86,11 +95,21 @@ public class FightingStateBorderShrinkTask extends BukkitRunnable {
                     .max(Comparator.comparingInt(Integer::intValue))
                     .orElse(-1);
 
-            if (nextBorderSize != -1) {
-                Bukkit.broadcastMessage(plugin.getMessages().borderShrink.replace("<time>", "2")
-                        .replace("<unit>", "minutes")
-                        .replace("<blocks>", nextBorderSize + ""));
+            if (nextBorderSize == -1 && !plugin.getSettings().endAfterFinalBorder) {
+                ((FightingState) plugin.getGameHandler().getGameState()).setShrinkTask(null);
+                cancel();
+                return;
             }
+
+            if (nextBorderSize == -1 && plugin.getSettings().endAfterFinalBorder) {
+                Bukkit.broadcastMessage(plugin.getMessages().gameEnding.replace("<time>", "2")
+                        .replace("<unit>", "minutes"));
+                return;
+            }
+
+            Bukkit.broadcastMessage(plugin.getMessages().borderShrink.replace("<time>", "2")
+                    .replace("<unit>", "minutes")
+                    .replace("<blocks>", nextBorderSize + ""));
         }
     }
 }
