@@ -11,15 +11,23 @@ import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_8_R3.block.CraftBlock;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.world.ChunkUnloadEvent;
+import org.bukkit.util.Vector;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
-public class WorldGenerator {
+public class WorldGenerator implements Listener {
 
     private final String worldName;
     private final MeetupPlugin plugin;
+
+    private final List<Vector> chunks = new ArrayList<>();
 
     public void generate() {
 
@@ -50,7 +58,10 @@ public class WorldGenerator {
         world.getWorldBorder().setSize((plugin.getSettings().startingBorderSize) * 2.0);
 
         Border border = new Border(world.getSpawnLocation(), Material.BEDROCK, plugin.getSettings().startingBorderSize, plugin.getSettings().borderHeight);
-        border.getPhysicalBounds().getChunks().forEach(world::loadChunk);
+        border.getPhysicalBounds().getChunks().forEach(chunk -> {
+            chunks.add(new Vector(chunk.getX(), 0, chunk.getZ()));
+            chunk.load();
+        });
         world.getEntities().stream().filter(entity -> entity.getType().isAlive() && entity.getType() != EntityType.PLAYER).forEach(Entity::remove);
 
         border.fill();
@@ -63,5 +74,12 @@ public class WorldGenerator {
 
     public void swapBiomes(Biome biome, Biome newBiome) {
         BiomeBase.getBiomes()[CraftBlock.biomeToBiomeBase(biome).id] = CraftBlock.biomeToBiomeBase(newBiome);
+    }
+
+    @EventHandler
+    public void onChunkUnload(ChunkUnloadEvent event) {
+        if (chunks.stream().anyMatch(vector -> vector.getX() == event.getChunk().getX() && vector.getZ() == event.getChunk().getZ())) {
+            event.setCancelled(true);
+        }
     }
 }

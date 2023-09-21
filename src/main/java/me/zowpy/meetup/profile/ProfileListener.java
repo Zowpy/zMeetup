@@ -3,8 +3,10 @@ package me.zowpy.meetup.profile;
 import lombok.RequiredArgsConstructor;
 import me.zowpy.meetup.MeetupPlugin;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 
 @RequiredArgsConstructor
 public class ProfileListener implements Listener {
@@ -12,7 +14,7 @@ public class ProfileListener implements Listener {
     private final MeetupPlugin plugin;
 
     @EventHandler
-    public void onJoin(AsyncPlayerPreLoginEvent event) {
+    public void onLogin(AsyncPlayerPreLoginEvent event) {
 
         Profile profile = plugin.getProfileHandler().findByUUID(event.getUniqueId());
 
@@ -23,5 +25,10 @@ public class ProfileListener implements Listener {
 
             plugin.getProfileHandler().save(profile);
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onJoin(PlayerJoinEvent event) {
+        event.setJoinMessage(null);
     }
 }
