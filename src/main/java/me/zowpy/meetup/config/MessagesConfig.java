@@ -41,9 +41,12 @@ public class MessagesConfig {
     @Coloured
     public String gameEnding = "&eThe game will end in &d<time> <unit>&e.";
 
-    @Comment("the format that will be used for death message. (<player>) This supports PlaceholderAPI")
+    @Comment("the format that will be used for death message & disconnect message. (<player>) This supports PlaceholderAPI")
     @Coloured
-    public String playerFormat = "<player>";
+    public String playerFormat = "&a<player>";
+
+    @Coloured
+    public String disconnect = "<player> &edisconnected and was disqualified.";
 
     @Coloured
     public String killMessage = "&a<player> &7[&c<player_kills>&7] &ewas slain by &a<killer> &7[&c<killer_kills>&7] &eusing &c<item>";
@@ -114,6 +117,10 @@ public class MessagesConfig {
 
     @Coloured
     public String noCleanRemoved = "&cYour no clean timer has been removed since you hit a player.";
+
+    @Comment("This message supports PlaceholderAPI")
+    @Coloured
+    public String timeBombExplode = "&a<player>'s &ecorpse has exploded!";
 
     @Coloured
     public String spectateReasonChose = "&cchose to watch";

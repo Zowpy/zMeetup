@@ -41,11 +41,6 @@ public class EndingState extends SpectateState implements IState, Listener {
                 if (winner == null) {
                     player.kickPlayer(plugin.getMessages().drawKickMessage);
                 }else {
-                    
-                    if (!winner.getUuid().equals(player.getUniqueId())) {
-                        plugin.getProfileHandler().loss(player);
-                    }
-
                     player.kickPlayer(plugin.getMessages().winnerKickMessage.replace("<winner>", winner.getName()));
                 }
             });

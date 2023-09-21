@@ -165,6 +165,12 @@ public class FightingState extends SpectateState implements IState, Listener {
                     World world = loc.getWorld();
 
                     world.createExplosion(loc, (float) plugin.getSettings().timeBombExplosionPower, false);
+
+                    if (hasPlaceholderAPI()) {
+                        Bukkit.broadcastMessage(PlaceholderAPI.setPlaceholders(player, plugin.getMessages().timeBombExplode.replace("<player>", player.getName())));
+                    }else {
+                        Bukkit.broadcastMessage(plugin.getMessages().timeBombExplode.replace("<player>", player.getName()));
+                    }
                 }
             }.runTaskLater(plugin, plugin.getSettings().timeBombSeconds * 20L);
         }
@@ -184,7 +190,18 @@ public class FightingState extends SpectateState implements IState, Listener {
 
             deathChest(player, drops);
 
-            CompletableFuture.runAsync(() -> plugin.getProfileHandler().loss(player));
+            String playerFormat = plugin.getMessages().playerFormat.replace("<player>", player.getName());
+
+            if (hasPlaceholderAPI()) {
+                playerFormat = PlaceholderAPI.setPlaceholders(player, playerFormat);
+            }
+
+            Bukkit.broadcastMessage(plugin.getMessages().disconnect.replace("<player>", playerFormat));
+
+            CompletableFuture.runAsync(() -> {
+                plugin.getProfileHandler().loss(player);
+                plugin.getProfileHandler().death(player);
+            });
         }
     }
 
@@ -263,7 +280,10 @@ public class FightingState extends SpectateState implements IState, Listener {
 
         }
 
-        CompletableFuture.runAsync(() -> plugin.getProfileHandler().death(player));
+        CompletableFuture.runAsync(() -> {
+            plugin.getProfileHandler().death(player);
+            plugin.getProfileHandler().loss(player);
+        });
 
         player.spigot().respawn();
     }
