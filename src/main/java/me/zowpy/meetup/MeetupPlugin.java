@@ -19,6 +19,7 @@ import me.zowpy.meetup.leaderboard.LeaderboardHandler;
 import me.zowpy.meetup.leaderboard.task.LeaderboardTask;
 import me.zowpy.meetup.loadout.LoadoutHandler;
 import me.zowpy.meetup.profile.ProfileHandler;
+import me.zowpy.meetup.profile.ProfileListener;
 import me.zowpy.meetup.utils.CC;
 import me.zowpy.meetup.utils.ConfigFile;
 import me.zowpy.meetup.utils.menu.ButtonListener;
@@ -117,6 +118,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         getServer().getPluginManager().registerEvents(new ButtonListener(this), this);
         getServer().getPluginManager().registerEvents(new ScoreboardListener(), this);
         getServer().getPluginManager().registerEvents(new GameListener(this), this);
+        getServer().getPluginManager().registerEvents(new ProfileListener(this), this);
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
 
