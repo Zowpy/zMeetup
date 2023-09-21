@@ -110,6 +110,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
                 .register(new LoadoutCommand(this))
                 .register(new StatsCommand(this))
                 .register(new SpectateCommand(this))
+                .register(new ForceStartCommand(this))
                 .endRegister();
 
         assemble = new Assemble(this, new ScoreboardAdapter(this));

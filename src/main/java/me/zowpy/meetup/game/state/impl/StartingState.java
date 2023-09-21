@@ -28,6 +28,7 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -37,6 +38,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class StartingState extends SpectateState implements IState, Listener {
 
     private final MeetupPlugin plugin;
+
+    private BukkitTask startTask;
 
     @Getter
     private long started;
@@ -60,7 +63,7 @@ public class StartingState extends SpectateState implements IState, Listener {
             }
         }
 
-        new BukkitRunnable() {
+        startTask = new BukkitRunnable() {
 
             @Override
             public void run() {
@@ -73,7 +76,7 @@ public class StartingState extends SpectateState implements IState, Listener {
                 if (plugin.getSettings().titles && plugin.getSettings().titleSeconds.contains(secondsLeft)) {
                     Bukkit.getOnlinePlayers().forEach(player -> {
                         PlayerUtil.sendTitleBar(
-                                player, 
+                                player,
                                 plugin.getMessages().startingTitle.replace("<seconds>", secondsLeft + ""),
                                 plugin.getMessages().startingSubTitle,
                                 0,
@@ -94,8 +97,6 @@ public class StartingState extends SpectateState implements IState, Listener {
 
                         plugin.getGameHandler().setGameState(fightingState);
                         disable();
-
-                        cancel();
                     }
                 }
             }
@@ -104,6 +105,9 @@ public class StartingState extends SpectateState implements IState, Listener {
 
     @Override
     public void disable() {
+        if (startTask != null)
+            startTask.cancel();
+
         HandlerList.unregisterAll(this);
     }
 

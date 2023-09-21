@@ -77,6 +77,7 @@ me\zowpy\meetup\profile\ProfileListener.class
 me\zowpy\meetup\utils\PlayerUtil.class
 me\zowpy\meetup\MeetupPlugin.class
 me\zowpy\meetup\border\action\DefaultBorderActions.class
+me\zowpy\meetup\command\ForceStartCommand.class
 me\zowpy\meetup\utils\menu\Menu.class
 me\zowpy\meetup\border\action\DefaultBorderActions$1.class
 me\zowpy\meetup\config\MessagesConfig.class
