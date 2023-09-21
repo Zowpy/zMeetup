@@ -107,7 +107,7 @@ public class MeetupExpansion extends PlaceholderExpansion {
             List<LeaderboardEntry> entries = plugin.getLeaderboardHandler().getLeaderboardEntries().get(type);
 
             if (entries == null) {
-                return "Failed to fetch leaderboards, Please wait. If it doesn't fix itself please contact the developer";
+                return plugin.getSettings().leaderboardFormat.replace("<name>", "N/A").replace("<value>", "0");
             }
 
             if (entries.size() < position) {
