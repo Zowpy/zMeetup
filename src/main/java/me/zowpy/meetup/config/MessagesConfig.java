@@ -46,16 +46,16 @@ public class MessagesConfig {
     public String playerFormat = "<player>";
 
     @Coloured
-    public String killMessage = "<player> &7[&c<player_kills>&7] &ewas slain by <killer> &7[&c<killer_kills>&7] &eusing &c<item>";
+    public String killMessage = "&a<player> &7[&c<player_kills>&7] &ewas slain by &a<killer> &7[&c<killer_kills>&7] &eusing &c<item>";
 
     @Coloured
-    public String lavaDeath = "<player> &7[&c<kills>&7] &etried to swim in lava.";
+    public String lavaDeath = "&a<player> &7[&c<kills>&7] &etried to swim in lava.";
 
     @Coloured
-    public String fallDeath = "<player> &7[&c<kills>&7] &ehas fallen to their death.";
+    public String fallDeath = "&a<player> &7[&c<kills>&7] &ehas fallen to their death.";
 
     @Coloured
-    public String otherDeath = "<player> &7[&c<kills>&7] &ewas slain.";
+    public String otherDeath = "&a<player> &7[&c<kills>&7] &ewas slain.";
 
     public List<String> winnerMessage = Arrays.asList(
             " ",

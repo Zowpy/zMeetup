@@ -12,6 +12,9 @@ public class MenusConfig {
 
     public SpectatingMenu spectating = new SpectatingMenu();
 
+    @Coloured
+    public String loadoutTitle = "Loadout Editor";
+
     public static class SpectatingMenu {
 
         public String title = "Remaining Players";

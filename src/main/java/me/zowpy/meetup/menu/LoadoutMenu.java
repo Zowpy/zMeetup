@@ -24,7 +24,7 @@ public class LoadoutMenu extends Menu {
 
     @Override
     public String getTitle(Player player) {
-        return "Loadout Editor";
+        return MeetupPlugin.getInstance().getMenusConfig().loadoutTitle;
     }
 
     @Override
