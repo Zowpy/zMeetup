@@ -6,6 +6,8 @@ import me.zowpy.command.annotation.Command;
 import me.zowpy.command.annotation.Permission;
 import me.zowpy.command.annotation.Sender;
 import me.zowpy.meetup.MeetupPlugin;
+import me.zowpy.meetup.game.task.FightingStateBorderShrinkTask;
+import me.zowpy.meetup.profile.Profile;
 import me.zowpy.meetup.utils.BungeeUtil;
 import me.zowpy.meetup.utils.CC;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -25,6 +27,21 @@ public class AnnounceCommand {
     @Permission("meetup.command.announce")
     @Command(name = "announce")
     public void announce(@Sender Player player) {
+        Profile profile = plugin.getProfileHandler().findOrDefault(player);
+
+        if (System.currentTimeMillis() - profile.getLastAnnounce() <= (plugin.getSettings().announceCooldown * 1000L)) {
+            int secondsLeft = (int) (((profile.getLastAnnounce() + (plugin.getSettings().announceCooldown * 1000)) - System.currentTimeMillis()) / 1000);
+
+
+            player.sendMessage(plugin.getMessages().announceCooldownMessage.replace("<seconds>",
+                    secondsLeft + ""
+            ));
+            return;
+        }
+
+        profile.setLastAnnounce(System.currentTimeMillis());
+        plugin.getProfileHandler().save(profile);
+
         TextComponent textBuilder = new TextComponent();
 
         if (plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
@@ -40,7 +57,7 @@ public class AnnounceCommand {
         for (int i = 0; i < plugin.getMessages().announceHover.size(); i++) {
             if (i > 0) {
                 s.add("\n" + CC.translate(plugin.getMessages().announceHover.get(i)));
-            }else {
+            } else {
                 s.add(CC.translate(plugin.getMessages().announceHover.get(i)));
             }
         }

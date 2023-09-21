@@ -65,6 +65,9 @@ public class SettingsConfig {
     @Comment("The command that players will run when they click the (Join) from the /announce")
     public String joinCommand = "/join um-01";
 
+    @Comment("How many seconds should the /announce cooldown be")
+    public int announceCooldown = 10;
+
     @Comment("How often should we update leaderboards? (in seconds)")
     public int leaderboardInterval = 30;
 

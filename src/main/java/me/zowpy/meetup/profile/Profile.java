@@ -18,6 +18,8 @@ public class Profile {
 
     private Loadout loadout = new Loadout();
 
+    private long lastAnnounce = -1L;
+
     public Profile(UUID uuid, String name) {
         this.uuid = uuid;
         this.name = name;

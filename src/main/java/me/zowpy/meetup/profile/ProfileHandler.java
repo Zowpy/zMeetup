@@ -2,6 +2,7 @@ package me.zowpy.meetup.profile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.LongSerializationPolicy;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class ProfileHandler {
             .disableHtmlEscaping()
             .serializeNulls()
             .setPrettyPrinting()
+            .setLongSerializationPolicy(LongSerializationPolicy.STRING)
             .create();
 
     private final UpdateOptions UPDATE_OPTIONS = new UpdateOptions().upsert(true);

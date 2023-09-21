@@ -86,6 +86,9 @@ public class MessagesConfig {
     );
 
     @Coloured
+    public String announceCooldownMessage = "&cYou need to wait <seconds> second(s) before using this command again.";
+
+    @Coloured
     public String startingTitle = "&a&l<seconds>";
 
     @Coloured
