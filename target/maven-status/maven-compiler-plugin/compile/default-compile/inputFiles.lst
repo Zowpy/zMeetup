@@ -33,6 +33,7 @@ C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\me
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\border\listener\InternalBorderListener.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\menu\buttons\impl\BackButton.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\command\SetSpawnCommand.java
+C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\command\ForceStartCommand.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\leaderboard\LeaderboardHandler.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\loadout\LoadoutHandler.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\game\enums\GameState.java

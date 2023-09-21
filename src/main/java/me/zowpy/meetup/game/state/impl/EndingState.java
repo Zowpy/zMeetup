@@ -51,7 +51,7 @@ public class EndingState extends SpectateState implements IState, Listener {
             });
 
             Bukkit.spigot().restart();
-        }, 60L);
+        }, 140L);
     }
 
     @Override
