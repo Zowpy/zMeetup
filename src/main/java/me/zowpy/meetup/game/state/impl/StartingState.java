@@ -49,6 +49,7 @@ public class StartingState extends SpectateState implements IState, Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
         started = System.currentTimeMillis();
+        plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), getGameState());
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             teleport(player);

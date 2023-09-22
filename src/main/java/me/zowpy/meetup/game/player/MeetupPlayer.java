@@ -20,4 +20,8 @@ public class MeetupPlayer {
         this.uuid = player.getUniqueId();
         this.name = player.getName();
     }
+
+    public boolean isPlaying() {
+        return !dead && !spectating;
+    }
 }

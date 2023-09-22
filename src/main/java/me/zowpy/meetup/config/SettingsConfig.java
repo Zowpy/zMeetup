@@ -1,5 +1,6 @@
 package me.zowpy.meetup.config;
 
+import me.zowpy.meetup.redis.RedisCredentials;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import xyz.mkotb.configapi.Coloured;
@@ -15,6 +16,15 @@ public class SettingsConfig {
 
     @Comment("The mongodb connection string, For more help look at this. https://www.mongodb.com/docs/v2.2/reference/connection-string/")
     public String mongoDB_URI = "mongodb://127.0.0.1:27017/admin";
+
+    @Comment("The id that will be used in redis (if its enabled)")
+    public String serverId = "um-01";
+
+    @Comment({"Use redis to be able to use the GameState, Alive Players, Dead Players in another servers"})
+    public boolean useRedis = false;
+
+    @Comment("The redis credentials (this is optional) and will only be used if 'use-redis' is enabled")
+    public RedisCredentials redisCredentials = new RedisCredentials("127.0.0.1", 6379, false, "");
 
     @Coloured
     public String primaryColor = "&e";

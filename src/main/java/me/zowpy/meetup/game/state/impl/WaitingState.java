@@ -84,6 +84,8 @@ public class WaitingState extends SpectateState implements IState, Listener {
             return;
         }
 
+        plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), getGameState());
+
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
         checkTask = new BukkitRunnable() {

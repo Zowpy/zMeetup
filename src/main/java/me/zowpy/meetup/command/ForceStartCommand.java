@@ -27,7 +27,6 @@ public class ForceStartCommand {
 
             plugin.getGameHandler().setGameState(fightingState);
             state.disable();
-
             return;
         }
 

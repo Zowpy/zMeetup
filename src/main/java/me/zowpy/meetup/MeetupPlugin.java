@@ -20,6 +20,7 @@ import me.zowpy.meetup.leaderboard.task.LeaderboardTask;
 import me.zowpy.meetup.loadout.LoadoutHandler;
 import me.zowpy.meetup.profile.ProfileHandler;
 import me.zowpy.meetup.profile.ProfileListener;
+import me.zowpy.meetup.redis.RedisHandler;
 import me.zowpy.meetup.utils.CC;
 import me.zowpy.meetup.utils.ConfigFile;
 import me.zowpy.meetup.utils.menu.ButtonListener;
@@ -52,6 +53,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
     private LoadoutHandler loadoutHandler;
     private ScenarioHandler scenarioHandler;
     private LeaderboardHandler leaderboardHandler;
+    private RedisHandler redisHandler;
 
     private LeaderboardTask leaderboardTask;
 
@@ -92,6 +94,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         gameHandler.getGameState().enable();
 
         if (!canStart) return;
+
+        redisHandler = new RedisHandler(settings.useRedis, settings.redisCredentials);
 
         borderHandler = new BorderHandler(this);
 

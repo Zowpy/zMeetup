@@ -80,6 +80,8 @@ public class GameHandler {
         }
 
         player.sendMessage(plugin.getMessages().spectateReasonMessage.replace("<reason>", reason.getName()));
+
+        plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), gameState.getGameState());
     }
 
     public void removeSpectator(Player player) {
