@@ -1,6 +1,7 @@
 package me.zowpy.meetup.config;
 
-import me.zowpy.meetup.redis.RedisCredentials;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import xyz.mkotb.configapi.Coloured;
@@ -24,7 +25,7 @@ public class SettingsConfig {
     public boolean useRedis = false;
 
     @Comment("The redis credentials (this is optional) and will only be used if 'use-redis' is enabled")
-    public RedisCredentials redisCredentials = new RedisCredentials("127.0.0.1", 6379, false, "");
+    public RedisCredentials redisCredentials = new RedisCredentials();
 
     @Coloured
     public String primaryColor = "&e";
@@ -84,4 +85,14 @@ public class SettingsConfig {
     @Comment("The leaderboard format for PlaceholderAPI")
     @Coloured
     public String leaderboardFormat = "&e<name> &7- &d<value>";
+
+    @Data
+    public static class RedisCredentials {
+
+        private String host = "127.0.0.1";
+        private int port = 6379;
+        private boolean auth = false;
+        private String password = "";
+    }
+
 }

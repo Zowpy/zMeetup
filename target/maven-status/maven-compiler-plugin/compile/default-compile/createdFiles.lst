@@ -54,6 +54,8 @@ me\zowpy\meetup\game\state\impl\FightingState$2.class
 me\zowpy\meetup\utils\CC.class
 me\zowpy\meetup\leaderboard\LeaderboardHandler.class
 me\zowpy\meetup\border\event\border\BorderChangeEvent.class
+me\zowpy\meetup\game\task\GameUpdateTask.class
+me\zowpy\meetup\redis\internal\JedisHandler.class
 me\zowpy\meetup\utils\ItemHelper.class
 me\zowpy\meetup\leaderboard\task\LeaderboardTask.class
 me\zowpy\meetup\game\enums\GameState.class
@@ -66,6 +68,7 @@ me\zowpy\meetup\profile\Profile.class
 me\zowpy\meetup\menu\SpectatingMenu.class
 me\zowpy\meetup\border\event\player\PlayerExitBorderEvent.class
 me\zowpy\meetup\border\Border.class
+me\zowpy\meetup\config\SettingsConfig$RedisCredentials.class
 me\zowpy\meetup\database\MongoHandler.class
 me\zowpy\meetup\border\runnable\EnsureInsideRunnable.class
 me\zowpy\meetup\config\MenusConfig.class
@@ -83,6 +86,7 @@ me\zowpy\meetup\border\action\DefaultBorderActions$1.class
 me\zowpy\meetup\config\MessagesConfig.class
 me\zowpy\meetup\utils\menu\buttons\impl\CloseButton.class
 me\zowpy\meetup\game\listener\GameListener.class
+me\zowpy\meetup\redis\RedisHandler.class
 me\zowpy\meetup\game\kit\KitHandler.class
 me\zowpy\meetup\game\task\FightingStateBorderShrinkTask.class
 me\zowpy\meetup\utils\menu\MenuUpdateTask.class

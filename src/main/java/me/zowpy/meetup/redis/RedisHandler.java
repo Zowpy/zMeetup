@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import me.zowpy.meetup.MeetupPlugin;
+import me.zowpy.meetup.config.SettingsConfig;
 import me.zowpy.meetup.game.GameHandler;
 import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.player.MeetupPlayer;
@@ -16,7 +17,7 @@ public class RedisHandler {
     private final boolean enabled;
     private JedisHandler jedisHandler;
 
-    public RedisHandler(boolean enabled, RedisCredentials redisCredentials) {
+    public RedisHandler(boolean enabled, SettingsConfig.RedisCredentials redisCredentials) {
         this.enabled = enabled;
 
         if (enabled) {
@@ -43,7 +44,7 @@ public class RedisHandler {
                     }
                 }
 
-                object.addProperty("state", gameHandler.getGameState().getGameState().name());
+                object.addProperty("state", gameState.name());
                 object.add("alivePlayers", alivePlayers);
                 object.add("deadPlayers", deadPlayers);
 

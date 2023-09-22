@@ -67,8 +67,6 @@ public class FightingState extends SpectateState implements IState, Listener {
     public void enable() {
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
-        plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), getGameState());
-
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerUtil.unsit(player);
 
@@ -205,8 +203,6 @@ public class FightingState extends SpectateState implements IState, Listener {
                 plugin.getProfileHandler().death(player);
             });
         }
-
-        plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), getGameState());
     }
 
     @EventHandler

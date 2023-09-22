@@ -23,8 +23,6 @@ public class EndingState extends SpectateState implements IState, Listener {
     public void enable() {
         Bukkit.getPluginManager().registerEvents(this, plugin);
 
-        plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), getGameState());
-
         if (winner == null) {
             plugin.getMessages().drawMessage.forEach(s -> Bukkit.broadcastMessage(CC.translate(s)));
         }else {

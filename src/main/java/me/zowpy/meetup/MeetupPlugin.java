@@ -15,6 +15,7 @@ import me.zowpy.meetup.game.listener.GameListener;
 import me.zowpy.meetup.game.prevention.PreventionListener;
 import me.zowpy.meetup.game.scenario.ScenarioHandler;
 import me.zowpy.meetup.game.scoreboard.ScoreboardListener;
+import me.zowpy.meetup.game.task.GameUpdateTask;
 import me.zowpy.meetup.leaderboard.LeaderboardHandler;
 import me.zowpy.meetup.leaderboard.task.LeaderboardTask;
 import me.zowpy.meetup.loadout.LoadoutHandler;
@@ -56,6 +57,7 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
     private RedisHandler redisHandler;
 
     private LeaderboardTask leaderboardTask;
+    private GameUpdateTask gameUpdateTask;
 
     private Assemble assemble;
 
@@ -90,12 +92,12 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
         profileHandler = new ProfileHandler(this);
         scenarioHandler = new ScenarioHandler();
 
+        redisHandler = new RedisHandler(settings.useRedis, settings.redisCredentials);
+
         gameHandler = new GameHandler(this);
         gameHandler.getGameState().enable();
 
         if (!canStart) return;
-
-        redisHandler = new RedisHandler(settings.useRedis, settings.redisCredentials);
 
         borderHandler = new BorderHandler(this);
 
@@ -106,6 +108,8 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         leaderboardHandler = new LeaderboardHandler(this);
         leaderboardTask = new LeaderboardTask(this);
+
+        gameUpdateTask = new GameUpdateTask(this);
 
         new CommandAPI(this)
                 .beginCommandRegister()
@@ -145,6 +149,9 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
         if (leaderboardTask != null)
             leaderboardTask.cancel();
+
+        if (gameUpdateTask != null)
+            gameUpdateTask.cancel();
 
         mongoHandler.close();
 

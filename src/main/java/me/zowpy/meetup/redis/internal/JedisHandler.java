@@ -1,7 +1,7 @@
 package me.zowpy.meetup.redis.internal;
 
 import lombok.Getter;
-import me.zowpy.meetup.redis.RedisCredentials;
+import me.zowpy.meetup.config.SettingsConfig;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -14,9 +14,9 @@ public class JedisHandler {
     private JedisPool jedisPool;
     private Jedis jedis;
 
-    private final RedisCredentials redisCredentials;
+    private final SettingsConfig.RedisCredentials redisCredentials;
 
-    public JedisHandler(RedisCredentials redisCredentials) {
+    public JedisHandler(SettingsConfig.RedisCredentials redisCredentials) {
         this.redisCredentials = redisCredentials;
 
         connect();
