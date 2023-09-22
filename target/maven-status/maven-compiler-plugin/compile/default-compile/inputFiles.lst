@@ -9,6 +9,7 @@ C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\command\
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\border\event\player\PlayerEnterBorderEvent.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\config\HotbarConfig.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\MeetupPlugin.java
+C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\redis\internal\JedisHandler.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\ConfigFile.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\leaderboard\enums\LeaderboardType.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\game\state\impl\EndingState.java
@@ -42,6 +43,7 @@ C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\me
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\game\task\FightingStateBorderShrinkTask.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\border\event\player\PlayerExitBorderEvent.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\game\scenario\impl\TimeBombScenario.java
+C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\redis\RedisHandler.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\CC.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\border\BorderConfiguration.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\border\BorderHandler.java
@@ -72,6 +74,7 @@ C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\menu\Spe
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\menu\LoadoutMenu.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\menu\Menu.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\game\state\impl\FightingState.java
+C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\game\task\GameUpdateTask.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\border\event\player\PlayerBorderEvent.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\database\MongoHandler.java
 C:\Users\Zowpy\IdeaProjects\Zowpy\zMeetup\src\main\java\me\zowpy\meetup\utils\BungeeUtil.java
