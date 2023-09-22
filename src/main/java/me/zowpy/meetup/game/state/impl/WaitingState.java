@@ -149,11 +149,6 @@ public class WaitingState extends SpectateState implements IState, Listener {
     }
 
     @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        plugin.getGameHandler().getPlayers().remove(event.getPlayer().getUniqueId());
-    }
-
-    @EventHandler
     public void on(EntityDamageEvent event) {
         event.setCancelled(true);
     }
