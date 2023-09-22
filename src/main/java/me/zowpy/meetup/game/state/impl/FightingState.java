@@ -25,10 +25,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
+import org.bukkit.event.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -176,9 +173,9 @@ public class FightingState extends SpectateState implements IState, Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onQuit(PlayerQuitEvent event) {
-        MeetupPlayer meetupPlayer = plugin.getGameHandler().getPlayers().remove(event.getPlayer().getUniqueId());
+        MeetupPlayer meetupPlayer = plugin.getGameHandler().getPlayers().get(event.getPlayer().getUniqueId());
 
         if (!meetupPlayer.isDead() && !meetupPlayer.isSpectating()) {
             Player player = event.getPlayer();

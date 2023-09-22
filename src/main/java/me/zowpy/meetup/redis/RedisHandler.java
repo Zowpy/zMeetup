@@ -9,6 +9,7 @@ import me.zowpy.meetup.game.GameHandler;
 import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.player.MeetupPlayer;
 import me.zowpy.meetup.redis.internal.JedisHandler;
+import org.bukkit.Bukkit;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -47,6 +48,7 @@ public class RedisHandler {
                 object.addProperty("state", gameState.name());
                 object.add("alivePlayers", alivePlayers);
                 object.add("deadPlayers", deadPlayers);
+                object.addProperty("online", Bukkit.getOnlinePlayers().size());
 
                 jedis.hset("zMeetup", MeetupPlugin.getInstance().getSettings().serverId, object.toString());
             });

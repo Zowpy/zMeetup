@@ -45,6 +45,7 @@ public class EndingState extends SpectateState implements IState, Listener {
                 }
             });
 
+            plugin.getRedisHandler().saveGameData(plugin.getGameHandler(), GameState.ENDING);
             Bukkit.spigot().restart();
         }, 140L);
     }
