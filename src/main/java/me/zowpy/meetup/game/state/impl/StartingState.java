@@ -8,14 +8,11 @@ import me.zowpy.meetup.game.enums.GameState;
 import me.zowpy.meetup.game.state.IState;
 import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.PlayerUtil;
-import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -26,7 +23,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -133,15 +130,26 @@ public class StartingState extends SpectateState implements IState, Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        PlayerUtil.reset(player);
-
         teleport(player);
         PlayerUtil.sit(player);
 
         if (empty(player)) {
+            PlayerUtil.reset(player);
+
             CompletableFuture.runAsync(() -> {
                 plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
             });
+        }else {
+
+            ItemStack[] content = player.getInventory().getContents();
+            ItemStack[] armor = player.getInventory().getArmorContents();
+
+            PlayerUtil.reset(player);
+
+            player.getInventory().setContents(content);
+            player.getInventory().setArmorContents(armor);
+
+            player.updateInventory();
         }
     }
 
