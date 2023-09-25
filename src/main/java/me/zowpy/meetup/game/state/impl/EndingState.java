@@ -38,6 +38,9 @@ public class EndingState extends SpectateState implements IState, Listener {
             Bukkit.getOnlinePlayers().forEach(player -> {
                 PlayerUtil.resetTitleBar(player);
 
+                PlayerUtil.reset(player);
+                player.saveData();
+
                 if (winner == null) {
                     player.kickPlayer(plugin.getMessages().drawKickMessage);
                 }else {
