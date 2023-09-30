@@ -35,6 +35,8 @@ public class ProfileListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
-        plugin.getGameHandler().getPlayers().remove(event.getPlayer().getUniqueId());
+        if (plugin.getGameHandler().isPlaying(event.getPlayer())) {
+            plugin.getGameHandler().getPlayers().remove(event.getPlayer().getUniqueId());
+        }
     }
 }

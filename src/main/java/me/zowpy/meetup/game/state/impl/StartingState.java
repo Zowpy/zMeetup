@@ -10,7 +10,6 @@ import me.zowpy.meetup.game.state.SpectateState;
 import me.zowpy.meetup.utils.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -27,7 +26,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -41,6 +41,8 @@ public class StartingState extends SpectateState implements IState, Listener {
     @Getter
     private long started;
 
+    private final HashSet<UUID> receivedLoadout = new HashSet<>();
+
     @Override
     public void enable() {
         Bukkit.getPluginManager().registerEvents(this, plugin);
@@ -53,6 +55,8 @@ public class StartingState extends SpectateState implements IState, Listener {
             if (plugin.getGameHandler().isPlaying(player)) {
                 PlayerUtil.reset(player);
                 PlayerUtil.sit(player);
+
+                receivedLoadout.add(player.getUniqueId());
 
                 CompletableFuture.runAsync(() -> {
                     plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
@@ -105,6 +109,8 @@ public class StartingState extends SpectateState implements IState, Listener {
         if (startTask != null)
             startTask.cancel();
 
+        receivedLoadout.clear();
+
         HandlerList.unregisterAll(this);
     }
 
@@ -130,11 +136,15 @@ public class StartingState extends SpectateState implements IState, Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        teleport(player);
+        if (!plugin.getGameHandler().isPlaying(player)) return;
+
         PlayerUtil.sit(player);
 
-        if (empty(player)) {
+        if (!receivedLoadout.contains(player.getUniqueId())) {
             PlayerUtil.reset(player);
+            teleport(player);
+
+            receivedLoadout.add(player.getUniqueId());
 
             CompletableFuture.runAsync(() -> {
                 plugin.getLoadoutHandler().giveRandom(player, plugin.getProfileHandler().findOrDefault(player).getLoadout());
@@ -151,11 +161,6 @@ public class StartingState extends SpectateState implements IState, Listener {
 
             player.updateInventory();
         }
-    }
-
-    private boolean empty(Player player) {
-        return Arrays.stream(player.getInventory().getContents())
-                .allMatch(itemStack -> itemStack == null || itemStack.getType() == Material.AIR);
     }
 
     @EventHandler

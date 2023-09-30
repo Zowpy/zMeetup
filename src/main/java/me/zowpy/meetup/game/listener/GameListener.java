@@ -23,7 +23,7 @@ public class GameListener implements Listener {
         Player player = event.getPlayer();
 
         MeetupPlayer meetupPlayer = new MeetupPlayer(player);
-        plugin.getGameHandler().getPlayers().put(player.getUniqueId(), meetupPlayer);
+        plugin.getGameHandler().getPlayers().putIfAbsent(player.getUniqueId(), meetupPlayer);
 
         plugin.getGameHandler().getPlayers().values().stream().filter(meetupPlayer1 -> meetupPlayer1.isSpectating() || meetupPlayer1.isDead())
                 .forEach(meetupPlayer1 -> {
