@@ -243,13 +243,11 @@ public class FightingState extends SpectateState implements IState, Listener {
 
             killerProfile.setKills(killerProfile.getKills() + 1);
 
-            Material material = killer.getItemInHand().getType();
-
             Bukkit.broadcastMessage(plugin.getMessages().killMessage.replace("<player>", playerFormat)
                     .replace("<player_kills>", meetupPlayer.getKills() + "")
                     .replace("<killer>", killerFormat)
                     .replace("<killer_kills>", killerProfile.getKills() + "")
-                    .replace("<item>", prettyName(material)));
+                    .replace("<item>", prettyName(killer.getItemInHand())));
         } else {
 
             switch (player.getLastDamageCause().getCause()) {
@@ -364,8 +362,12 @@ public class FightingState extends SpectateState implements IState, Listener {
         return Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
-    private String prettyName(Material material) {
-        String pretty = material.name().toLowerCase().replace("_", " ");
+    private String prettyName(ItemStack item) {
+        if (item == null || item.getType() == Material.AIR) {
+            return "their fist";
+        }
+
+        String pretty = item.getType().name().toLowerCase().replace("_", " ");
         String[] split = pretty.split("\\s+");
 
         for (int i = 0; i < split.length; i++) {
