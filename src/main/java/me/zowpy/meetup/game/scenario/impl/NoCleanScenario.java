@@ -90,6 +90,8 @@ public class NoCleanScenario extends Scenario {
         if (noCleanTask != null)
             noCleanTask.cancel();
 
+        noClean.clear();
+
         HandlerList.unregisterAll(this);
     }
 
