@@ -28,8 +28,12 @@ import me.zowpy.meetup.utils.menu.ButtonListener;
 import me.zowpy.meetup.utils.menu.MenuUpdateTask;
 import me.zowpy.meetup.world.WorldGenerator;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 import xyz.mkotb.configapi.ConfigFactory;
+
+import java.io.File;
 
 @Getter
 public final class MeetupPlugin extends JavaPlugin implements Listener {
@@ -65,6 +69,10 @@ public final class MeetupPlugin extends JavaPlugin implements Listener {
 
     @Setter
     private boolean canStart = true;
+
+    public MeetupPlugin(final JavaPluginLoader loader, final PluginDescriptionFile description, final File dataFolder, final File file) {
+        super(loader, description, dataFolder, file);
+    }
 
     @Override
     public void onEnable() {
