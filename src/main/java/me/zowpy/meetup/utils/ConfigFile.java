@@ -2,6 +2,7 @@ package me.zowpy.meetup.utils;
 
 import lombok.Getter;
 import lombok.SneakyThrows;
+import me.zowpy.meetup.MeetupPlugin;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -16,7 +17,7 @@ public class ConfigFile {
     private YamlConfiguration config;
 
     @SneakyThrows
-    public ConfigFile(Plugin plugin, String name) {
+    public ConfigFile(MeetupPlugin plugin, String name) {
         file = new File(plugin.getDataFolder(), name + ".yml");
 
         if (!plugin.getDataFolder().exists()) {
@@ -29,6 +30,7 @@ public class ConfigFile {
         }
 
         config = YamlConfiguration.loadConfiguration(file);
+        config.options().copyDefaults(true);
     }
 
     public void set(String path, Object value) { config.set(path, value); }
