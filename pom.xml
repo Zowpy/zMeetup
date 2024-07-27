@@ -62,6 +62,11 @@
                                 </relocation>
 
                                 <relocation>
+                                    <pattern>org.bson</pattern>
+                                    <shadedPattern>me.zowpy.meetup.internal.bson</shadedPattern>
+                                </relocation>
+
+                                <relocation>
                                     <pattern>redis.clients.jedis</pattern>
                                     <shadedPattern>me.zowpy.meetup.internal.jedis</shadedPattern>
                                 </relocation>
